@@ -9,10 +9,6 @@ Everything here has been created with Wave signature scheme in mind, so only the
 **Warning** There is No implementation of any algorithm here, the aim here is just to compute asymptotic cost of algorithms to help the user to select his prefered trade off.
 
 
-# Requirements
-* Sagemath 9.2
-* Python 3.9.2
-
 # Common notation and terminologies
 
 In the functions used here, the notation is quite redundant. We define here the most common terminologies.

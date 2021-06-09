@@ -4,10 +4,6 @@
 This project is a PoC which implements a 4-dissection with 3 levels embedded in an Information-Set Decoding framework.
 It aims at solving a ternary syndrome decoding with large weight.
 
-# Requirements
-* Sagemath 9.2
-* Python 3.9.2
-
 # Usage
 
 File <tt> main.sage </tt> provides a minimal example, with \f$n=560\f$ and Wave asymptotic parameters. <br />
