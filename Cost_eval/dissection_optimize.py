@@ -29,20 +29,3 @@ def compute_best_complexity_dissection(r=120, final_treatement=True):
     return(M_tot, T_tot,final_Res )
 
 
-"""def compute_best_complexity_dissection_real(n,k, w, r=120, traitement_final=True,nb_points = 4): 
-
-    M_tot = [];T_tot = [];col_tot = [];final_ls = []
-    steps =  int((int(0.037*n) - int(0.025*n))/nb_points)
-    ls = range(int(0.025*n), int(0.037*n),steps)
-    for l in ls:
-        print(l)
-        (M,T,col) = dissection_real(r,n, k, l,w)
-        M_tot = np.append(M_tot, M)
-        T_tot = np.append(T_tot, T)
-        col_tot = np.append(col_tot, col)
-        final_ls = np.append(final_ls, [l for _ in range(0,len(M)) ])
-        #plt.plot(M, T,markersize = 3, linewidth = 0, marker = '.', )     
-        if (traitement_final):
-            M_tot, T_tot, final_ls = traitement_array(M_tot,T_tot, final_ls)
-    return(M_tot, T_tot,final_ls )    """
-    

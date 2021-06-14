@@ -225,56 +225,60 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
 
 
 
-## instanciated version of apply_calibration
+
+## Applies memory blow up algorithm (or last algorithm) 
 # @param nbtargets int the bigger, the better precision but the longer time it takes
-# @return (m,t) log2 of memory / complexity  or -1,-1 if algorithm is not applicable
+# @return (m,t) log2 of memory / complexity or -1,-1 if algorithm is not applicable
 def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
-        TrackMem = []
+        TrackMem = -1
+
         # MaxAlphabeta computation
         _,gainX  = find_best_magic(1,r)
         _,gainOfgain = find_best_magic(1,gainX+1)
         MaxAlphaBeta = r - 2*gainX - 1 + gainOfgain
         
         # t is the target of the first floor
-        # its maximum corresponds to the perfectly balanced case where there is no granularity problem, nor PopSol 
-        for t in np.linspace(0, (r-1)/(r + (h-1)*(r-1) - c) , nbtargets,):
+        # its maximum value  corresponds to the base algorithm target 
+        # We start with biggest possible target because it is the one that gives us the best results
+        for t in np.linspace(0, (r-1)/(r + (h-1)*(r-1) - c) , nbtargets)[::-1]:
             cardLeaves = math.log(2,3)*(k+l)/r**h
-            card11, _,alpha = real_apply_calibration(n,k,l,r,c,h-1,Skkl,1-t)
-            card1 = card11/(l*math.log(3,2)) 
-            #M = cardLeaves/l
-  
-            # Choice of beta : the bigger, the better. 
-            # We take the min of different values because it corresponds to several constraints on beta
-            #-- X - (card1+t)/cardLeaves*Re : PopSol
-            #--With variable 'A' : want complexity of Upperpart to dominate 
-            #--Maxalphabeta : maximal value possible of beta
-            A = card1/(card1+t)*(c-alpha)
-            passLoop=True
-            if A-1 > 0:
-                beta = min(r - (card1+t)/cardLeaves*l,MaxAlphaBeta, (A*r-c)/(A-1)) 
-            else:
-                beta = min(r - (card1+t)/cardLeaves*l,MaxAlphaBeta) 
-                if beta*(A-1)  > (A*r-c):
-                    passLoop = False
+        
+            cardWanted, _,alpha = real_apply_calibration(n,k,l,r,c,h-1,Skkl,1-t)
+            if cardWanted <0: #UNSAT
+                continue 
+             
+            cardWanted = cardWanted/(math.log(3,2))         
 
-            if passLoop and alpha < MaxAlphaBeta and beta > 0 and card11!=-1:
-                Mbase = (card1+t)/(r-beta)
-                TrackMem.append(card1*l*math.log(3,2))
+            # Compute bounds for beta : need beta_lower < beta < beta_upper Explanations : 
+            # # MaxAlphaBeta : max dissection granularity
+            # # (cardWanted+t*Re)/cardLeaves : want that card obtained from first dissection 
+            # greater than cardWanted
+            # #  c - cardWanted/cardLeaves * (c-alpha) : time complexity of upper part dominates 
+            # Also, the bigger is beta, the better
+            beta_upper = min(MaxAlphaBeta, r - (cardWanted+t*l)/cardLeaves)
+            beta_lower = c - cardWanted/cardLeaves * (c-alpha)
+            
+            if beta_upper < beta_lower or beta_upper <0: #UNSAT
+                continue
+                
+            # in such case we have  beta = beta_upper
+            
+            TrackMem = cardWanted*math.log(3,2)
+            
+            # we exit the loop because this is the maximum t such that we have solved the problem
+            break 
+            
 
-                # Several assertions that fail in case of we break everything
-                # the 1e-8 is here to allow numerical approx.
-                #assert(1e-8 > Mbase-card1)
-                assert(1e-8 > (Mbase*(c-beta)*l-Skkl*n))
-
-
-        # If no point has been found for this problem
-        if len(TrackMem) == 0:
+        # No point has been found for this problem
+        if TrackMem == -1:
             return -1,-1
-        # Every computed point is in O(1) for this Re coeff, so we just need to take the smallest memory 
+
         g = gain(r,1)
         coeff_mem = math.log(r**h*2*n,2) # Number of lists times vector size times F3 coeff
         coeff_times = math.log((g+1)*(r**h-1)/(r-1)*2*n,2) # Number of main merges done in the dissection times number of considered dissections times memory coeff
-        return(min(TrackMem)+coeff_mem, n*Skkl*math.log(3,2)+coeff_times)
+        return (TrackMem+coeff_mem, Skkl*n*math.log(3,2)+coeff_times)
+        # Every computed point is in O(1) for this Re coeff, so we just need to take the smallest memory 
+        return(TrackMem, Skkl*math.log(3,2))
 
 
 

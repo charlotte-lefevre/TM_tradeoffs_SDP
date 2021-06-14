@@ -24,10 +24,9 @@ clight = ["blue", "lightgreen", "violet", "cyan", "darkorange", "coral", "lightg
 # * black : the granularity of the dissection is not fine enough for us to have solutions in O(1). 
 # To stay in this regime, it was necessary to balance the number of required solutions in the upper dissection and lower dissection
 # * colored points : doing the previous balancing does not work. Here, we desesperately try to reduce the size of the meet-in the middle.
-# Spoiler : with Wave parameters, the gain induced by black and colored points is very neglectable. This is why parameter optimize is set to True
 # @attention This function has been desgined such that maximum allowed  memory is the one of Wave state of the art algorithm. 
 # If you are not working with Wave parameters, you should change max_m value
-def dissection(r, R, Re,W, nbMem=100, optimize = False): 
+def dissection(r, R, Re,W, nbMem=100): 
     Skkl = skkl(Re,R, W)
     M = [];T = [];color=[]
 
@@ -44,9 +43,7 @@ def dissection(r, R, Re,W, nbMem=100, optimize = False):
             gain_gplusm_dissection= gain(g+m,m)
             gain_g_dissection= gain(g,m)
             # if complexity of g+m dissection is dominating, we enter the dissection to reduce the amortized time
-            if (a < max(m,(g-gain_gplusm_dissection) )):
-                if optimize: #Do not do computation that take a lot of time
-                    continue                   
+            if (a < max(m,(g-gain_gplusm_dissection) )):                  
                 if ( a >= max(g - m - gain_g_dissection, m)): # can adjust the number of solutions returned by small dissection
                     M = np.append(M,m*BaseMem*math.log(3,2))
                     T = np.append(T,max(Skkl, BaseMem*(a+g-gain_gplusm_dissection)/2)*math.log(3,2))
