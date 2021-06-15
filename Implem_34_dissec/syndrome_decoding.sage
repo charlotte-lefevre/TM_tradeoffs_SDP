@@ -93,7 +93,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     ####################################
     if (verbose):
         print("\n\n LEVELLL 1\n\n")
-        print("Expected length 53.3 for three first ones otherwise / 92 ")
+        print("Expected length 53.3 for three first ones otherwise / 90 ")
     for i in range(0,4**3,4):
     # Build 4 lists and do a 4-dissection
     # The H[ugly indexes] represent the columns of H upon which we should do linear combinations for each list
@@ -123,7 +123,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     # Just for debug, to remove
     assert(len(Lists_level_2) == 4**2)
 
-    ####################################
+    ####################################.
     ############# LEVEL 2 ##############
     ####################################
     if verbose:
@@ -168,7 +168,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     if verbose:
         print("Number of solutions " + str(len(List_L)))
         print("end")
-        print("Theoretical expected number of solutions " + str(RR(3**(2*l/11))))
+        print("Theoretical expected number of solutions: 804 ")
     return List_L
 
 
