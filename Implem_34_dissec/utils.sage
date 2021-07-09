@@ -41,8 +41,8 @@ def return_all_LC_matrix(M,cardinal):
     return(linear_combin, vectors)
 
 
-## From a submatrix H_sub, it builds a list containing cardinal_list linear combinations of vectors
-# if index is equal to 0, it takes into account the syndrom (that is populates the list with "linear_combinations - s")
+## From a submatrix H_sub, it builds a list containing "cardinal_list" linear combinations of vectors
+# To every element in the list is added "s"
 # The result is returned as a dict "Linear combination ---> vector"
 # @attention for practical reasons everything is returned as a matrix object (appending is much easier)
 def build_list_matrix(H_sub, index, s,cardinal_list):
@@ -50,10 +50,8 @@ def build_list_matrix(H_sub, index, s,cardinal_list):
     (Mtimesvs, vs) = return_all_LC_matrix(H_sub,cardinal_list) #on a la liste des CL des colones (target) avec les vecteurs associés
     for j in range(0,len(Mtimesvs)):
         M_times_v = 0
-        if (index == 0): # We shall include the syndrome
-            M_times_v = (Mtimesvs)[j] - s
-        else:
-            M_times_v = (Mtimesvs)[j]
+        M_times_v = (Mtimesvs)[j] + s
+
         v = vs[j]
         M_times_v.set_immutable()
         L[M_times_v] = v

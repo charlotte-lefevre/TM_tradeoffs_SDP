@@ -26,12 +26,13 @@ def main():
 
 
     print("Run main algo ..")
-    e = SDP(H,s,n,k,l,w)
+    e, nb_iter = SDP(H,s,n,k,l,w)
     e = vector(e)
     print("Solution returned ! Let us check is it works ..")
 
-    if (H*e - s == 0):
+    if (H*e - s == 0 and e.hamming_weight() == w):
         print("It works :) ")
+        return nb_iter
     else:
         print("\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!It does not work .. ! ")
         H = random_matrix(F3, nrows = n-k, ncols = n)
@@ -39,5 +40,13 @@ def main():
         e = SDP(H,s,n,k,l,w)
         e = vector(e)
         print((H*e - s == 0))
+        print( e.hamming_weight())
+        exit()
 
-main()
+nb_samples = 10
+print("Aim: do statistics on number of iterations with " +str(nb_samples) + " samples")
+nb_iter = 0
+for i in range(0,nb_samples):
+    nb_iter = nb_iter+main()
+nb_iter = nb_iter/nb_samples
+print("Average number of iterations: " + str(nb_iter))
