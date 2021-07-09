@@ -14,7 +14,7 @@ from Wave_param import * # R and W
 # The code here is just a precise way to get the best possible points
 def compute_best_complexity_dissection(r=120, final_treatement=True): 
     M_tot = [];T_tot = [];final_Res = []
-    Res = np.linspace(0.025, 0.037, 30)
+    Res = np.linspace(0.001,0.034, 40)
     for Re in Res:
         (M,T,col) = dissection(r, R, Re,W)
         for i in range(0, len(M)):
