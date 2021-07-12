@@ -107,6 +107,38 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     #this is where we need to change list initialisation if the n paraùmeter is changed
 
 
+        # if (i < 4*3): 
+        #     a_i =  random_matrix(F3, ncols = 1, nrows = l)
+        #     sum_ais = sum_ais - a_i
+        #     if (i == 0):# need to include the sub-syndrome in the lists
+        #         L1 = build_list_matrix(H22[:,index_H : index_H+6], i, -sub_s+a_i,cardinal_list_6)
+        #     else:
+        #         L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
+
+        #     L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
+        #     a_i = random_matrix(F3, ncols = 1, nrows = l)
+        #     sum_ais = sum_ais - a_i
+        #     L3 = build_list_matrix(H22[:,index_H+12 : index_H+18], i+3, a_i,cardinal_list_6)
+        #     L4 = build_list_matrix(H22[:,index_H+18 : index_H+18+7], i+4, null_vect,cardinal_list_7)
+        #     index_H = index_H + 18+7
+        # else:
+        #     a_i = random_matrix(F3, ncols = 1, nrows = l)
+        #     sum_ais = sum_ais - a_i
+        #     L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
+        #     L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
+        #     if(i == 4**3-4): # means that we have a_32, which is fixed because sul of a_i = 0
+        #         L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, sum_ais,cardinal_list_7)
+        #         L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
+        #     else:
+        #         a_i = random_matrix(F3, ncols = 1, nrows = l)
+        #         sum_ais = sum_ais - a_i
+        #         L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, a_i,cardinal_list_7)
+        #         L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
+
+        #     index_H = index_H + 12+14
+
+
+
         if (i < 4*3): 
             a_i =  random_matrix(F3, ncols = 1, nrows = l)
             sum_ais = sum_ais - a_i
@@ -116,25 +148,20 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
                 L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
 
             L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
-            a_i = random_matrix(F3, ncols = 1, nrows = l)
-            sum_ais = sum_ais - a_i
-            L3 = build_list_matrix(H22[:,index_H+12 : index_H+18], i+3, a_i,cardinal_list_6)
+            L3 = build_list_matrix(H22[:,index_H+12 : index_H+18], i+3, null_vect,cardinal_list_6)
             L4 = build_list_matrix(H22[:,index_H+18 : index_H+18+7], i+4, null_vect,cardinal_list_7)
             index_H = index_H + 18+7
         else:
-            a_i = random_matrix(F3, ncols = 1, nrows = l)
-            sum_ais = sum_ais - a_i
-            L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
-            L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
-            if(i == 4**3-4): # means that we have a_32, which is fixed because sul of a_i = 0
-                L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, sum_ais,cardinal_list_7)
-                L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
+            if(i == 4**3-4): # means that we have a_16, which is fixed because sul of a_i = 0
+                L1 = build_list_matrix(H22[:,index_H : index_H+6], i, sum_ais,cardinal_list_6)
             else:
                 a_i = random_matrix(F3, ncols = 1, nrows = l)
                 sum_ais = sum_ais - a_i
-                L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, a_i,cardinal_list_7)
-                L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
+                L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
 
+            L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
+            L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, null_vect,cardinal_list_7)
+            L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
             index_H = index_H + 12+14
 
 

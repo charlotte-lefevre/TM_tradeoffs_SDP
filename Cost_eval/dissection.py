@@ -39,36 +39,37 @@ def dissection(r, R, Re,W, nbMem=100):
         max_m = int(math.log(2,3)*0.0176/BaseMem) #state of the art memory
         for m in range(1,max_m+1): # memory  parameter
             g = gain(r,m)
-            a = 1/BaseMem * Skkl +max(0,- g + Re/BaseMem - m) #represents desired number of solutions on the recursive dissection (need 3^{BaseMem * a}) solutions 
-            gain_gplusm_dissection= gain(g+m,m)
-            gain_g_dissection= gain(g,m)
-            # if complexity of g+m dissection is dominating, we enter the dissection to reduce the amortized time
-            if (a < max(m,(g-gain_gplusm_dissection) )):                  
-                if ( a >= max(g - m - gain_g_dissection, m)): # can adjust the number of solutions returned by small dissection
-                    if Skkl<=BaseMem*(a+g-gain_gplusm_dissection)/2:
-                        M = np.append(M,m*BaseMem*math.log(3,2))
-                        T = np.append(T,max(Skkl, BaseMem*(a+g-gain_gplusm_dissection)/2)*math.log(3,2))
-                        color = np.append(color, "black")
+            if BaseMem<=Re/(g+m): # to avoid 'useless' points, but can be removed 
+                a = 1/BaseMem * Skkl +max(0,- g + Re/BaseMem - m) #represents desired number of solutions on the recursive dissection (need 3^{BaseMem * a}) solutions 
+                gain_gplusm_dissection= gain(g+m,m)
+                gain_g_dissection= gain(g,m)
+                # if complexity of g+m dissection is dominating, we enter the dissection to reduce the amortized time
+                if (a < max(m,(g-gain_gplusm_dissection) )):                  
+                    if ( a >= max(g - 2*m - 2*gain_g_dissection+gain_gplusm_dissection, m)): # can adjust the number of solutions returned by small dissection
+                        if Skkl<=BaseMem*(a+g-gain_gplusm_dissection)/2:
+                            M = np.append(M,m*BaseMem*math.log(3,2))
+                            T = np.append(T,max(Skkl, BaseMem*(a+g-gain_gplusm_dissection)/2)*math.log(3,2))
+                            color = np.append(color, "black")
 
-                elif (a >m): # try to increase the sub dissection size 
-                    u = g
-                    condition = True
-                    while(u >=2 and condition):
-                        u = u - 1
-                        a = a + 1
-                        if (a >= u - gain(u+m,m)): # no granularity problem
-                            M = np.append(M,m*BaseMem*math.log(3,2))
-                            T = np.append(T, max(Skkl, BaseMem*a)*math.log(3,2))
-                            color = np.append(color, cdark[(m-1) %10])
-                            condition = False
-                        elif(a >= max(u - m - gain(u,m), m)): # can adjust the number of solutions returned by small dissection
-                            M = np.append(M,m*BaseMem*math.log(3,2))
-                            T = np.append(T,max(Skkl, BaseMem*(a+u-gain(u+m,m))/2)*math.log(3,2))
-                            color = np.append(color, clight[(m-1)  %10])
-                            condition = False
-            else:
-                M = np.append(M,m*BaseMem*math.log(3,2))
-                T = np.append(T,max(a*BaseMem, Skkl)*math.log(3,2))
-                color = np.append(color, "red")
+                    elif (a >m): # try to increase the sub dissection size 
+                        u = g
+                        condition = True
+                        while(u >=2 and condition):
+                            u = u - 1
+                            a = a + 1
+                            if (a >= u - gain(u+m,m)): # no granularity problem
+                                M = np.append(M,m*BaseMem*math.log(3,2))
+                                T = np.append(T, max(Skkl, BaseMem*a)*math.log(3,2))
+                                color = np.append(color, cdark[(m-1) %10])
+                                condition = False
+                            elif(a >= max(u - m - gain(u,m), m)): # can adjust the number of solutions returned by small dissection
+                                M = np.append(M,m*BaseMem*math.log(3,2))
+                                T = np.append(T,max(Skkl, BaseMem*(a+u-gain(u+m,m))/2)*math.log(3,2))
+                                color = np.append(color, clight[(m-1)  %10])
+                                condition = False
+                else:
+                    M = np.append(M,m*BaseMem*math.log(3,2))
+                    T = np.append(T,max(a*BaseMem, Skkl)*math.log(3,2))
+                    color = np.append(color, "red")
                         
     return (M, T, color)
