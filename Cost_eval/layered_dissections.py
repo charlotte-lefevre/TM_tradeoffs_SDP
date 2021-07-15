@@ -181,13 +181,11 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
         _,gainX  = find_best_magic(1,r)
         _,gainOfgain = find_best_magic(1,gainX+1)
         MaxAlphaBeta = r - 2*gainX - 1 + gainOfgain
-        
+        cardLeaves = math.log(2,3)*(R+Re)/r**h
         # t is the target of the first floor
         # its maximum value  corresponds to the base algorithm target 
         # We start with biggest possible target because it is the one that gives us the best results
         for t in np.linspace(0, (r-1)/(r + (h-1)*(r-1) - c) , nbtargets)[::-1]:
-            cardLeaves = math.log(2,3)*(R+Re)/r**h
-            
             cardWanted, _,alpha = apply_calibration(R,Re,r,c,h-1,Skkl,(1-t))
             if cardWanted <0: #UNSAT
                 continue 
@@ -207,7 +205,6 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
                 continue
                 
             # in such case we have  beta = beta_upper
-            
             TrackMem = cardWanted*math.log(3,2)
             
             # we exit the loop because this is the maximum t such that we have solved the problem
@@ -336,7 +333,6 @@ def real_Apply(n, k, w, r, h, lmin, lmax, nbls = 100, nbtarget =80):
     l = int(lmin)
 
     while l < lmax:
-        
         Skkl = real_skkl(n,w,k,l)
 
         if real_is_classic_OK(n,k,l,r,c,h, Skkl):
@@ -344,14 +340,11 @@ def real_Apply(n, k, w, r, h, lmin, lmax, nbls = 100, nbtarget =80):
             TrackMem.append(mem)
             TrackTimes.append(time)
             TrackCols.append("red"); Trackls.append(l)
-        # Si on est la, alors mauvaise granularité OU mauvaise Popsol. ImprovedMemPopSolOK est Ok ssi on avait popsol avant OK/
-        # Donc c'est bien un probleme de granulrité
         elif real_is_calibrated_OK(n,k,l,r,c,h, Skkl): 
             (mem,time,_) = real_apply_calibration(n,k,l,r,c,h, Skkl,1, asymptotic=False)
             TrackMem.append(mem)
             TrackTimes.append(time)
             TrackCols.append("blue") ;Trackls.append(l)
-
         elif real_is_smoothed_OK(n,k,l,r,c,h, Skkl):
             (mem,time) = real_apply_smoothed(n,k,l,r,c,h, Skkl)
             TrackMem.append(mem)
