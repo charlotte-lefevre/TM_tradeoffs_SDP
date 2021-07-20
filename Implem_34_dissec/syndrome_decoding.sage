@@ -1,5 +1,5 @@
 ## @package syndrome_decoding
-# Implements ISD algorithm.
+# Implements ISD algorithm
 # Calls for the SubSetSum step a 3,4 dissection
 
 
@@ -72,15 +72,16 @@ def build_H(H, s,n,k,l):
 ## Solves the SSS H_ss * e  = sub_s using a four-dissection
 # verbose option prints infromations about expected list cardinal & can display warning
 #  The algorithm is deterministic, even thought we are supposed to pick in the lists in a random way
-def four_tree_list_tree(l,sub_s, H22, verbose = False):
+def four_tree_list_tree(l,sub_s, H22, H12, sp, target_weight, verbose = False):
 
     # Because we are dealing with concrete instances, we can not have same list cardinal everywhere 
     # so we needed to taylor the list caridnal to have exactly what we want
+    # To change the value of n, variables cardinal_list_6, cardinal_list_7;, target1 and taregt2 shall be changed 
     cardinal_list_6 = 2**6
     cardinal_list_7 = 108
 
-    target_11 = 4
-    target_12 = 8
+    target1 = 4
+    target2 = 8
 
 
     Lists_level_2 = []
@@ -92,7 +93,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     ############# LEVEL 1 ##############
     ####################################
     if (verbose):
-        print("\n\n LEVELLL 1\n\n")
+        print("\n\n LEVEL 1\n\n")
         print("Expected length 53.3 for three first ones otherwise / 90 ")
 
     # the ais represent the intermediate targets. Indeed, insead of seacrhing for collisions of form L_{i} - L_{i+1} = 0, 
@@ -105,39 +106,6 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     # Build 4 lists and do a 4-dissection
     # The H[ugly indexes] represent the columns of H upon which we should do linear combinations for each list
     #this is where we need to change list initialisation if the n paraùmeter is changed
-
-
-        # if (i < 4*3): 
-        #     a_i =  random_matrix(F3, ncols = 1, nrows = l)
-        #     sum_ais = sum_ais - a_i
-        #     if (i == 0):# need to include the sub-syndrome in the lists
-        #         L1 = build_list_matrix(H22[:,index_H : index_H+6], i, -sub_s+a_i,cardinal_list_6)
-        #     else:
-        #         L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
-
-        #     L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
-        #     a_i = random_matrix(F3, ncols = 1, nrows = l)
-        #     sum_ais = sum_ais - a_i
-        #     L3 = build_list_matrix(H22[:,index_H+12 : index_H+18], i+3, a_i,cardinal_list_6)
-        #     L4 = build_list_matrix(H22[:,index_H+18 : index_H+18+7], i+4, null_vect,cardinal_list_7)
-        #     index_H = index_H + 18+7
-        # else:
-        #     a_i = random_matrix(F3, ncols = 1, nrows = l)
-        #     sum_ais = sum_ais - a_i
-        #     L1 = build_list_matrix(H22[:,index_H : index_H+6], i, a_i,cardinal_list_6)
-        #     L2 = build_list_matrix(H22[:,index_H+6 : index_H+12], i+1, null_vect,cardinal_list_6)
-        #     if(i == 4**3-4): # means that we have a_32, which is fixed because sul of a_i = 0
-        #         L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, sum_ais,cardinal_list_7)
-        #         L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
-        #     else:
-        #         a_i = random_matrix(F3, ncols = 1, nrows = l)
-        #         sum_ais = sum_ais - a_i
-        #         L3 = build_list_matrix(H22[:,index_H+12 : index_H+12+7], i+3, a_i,cardinal_list_7)
-        #         L4 = build_list_matrix(H22[:,index_H+12+7 : index_H+12+14], i+4, null_vect,cardinal_list_7)
-
-        #     index_H = index_H + 12+14
-
-
 
         if (i < 4*3): 
             a_i =  random_matrix(F3, ncols = 1, nrows = l)
@@ -165,7 +133,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
             index_H = index_H + 12+14
 
 
-        L1234 = four_dissection(L1,L2,L3,L4,l, 0,target_11,target_12, False, verbose)
+        L1234 = four_dissection(L1,L2,L3,L4,l, 0,target1,target2, False, verbose=verbose)
 
 
         Lists_level_2.append(L1234)
@@ -179,7 +147,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     ############# LEVEL 2 ##############
     ####################################
     if verbose:
-        print("\n\n LEVELLL 2\n\n")
+        print("\n\n LEVEL 2\n\n")
         print("Expected length 25.6 for first one or 122.9")
 
     # Building the lists and doing 4-dissection
@@ -190,10 +158,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
         L3 = Lists_level_2[i+2]
         L4 = Lists_level_2[i+3]
 
-        L1234 = four_dissection(L1,L2,L3,L4,l,target_12+target_11, target_11,target_12, False, verbose)
-
-        #check_syndrome = (i==0)
-        #oracle_test_four_list_tree(Htmp,L1234,s, 0,(target_11+target_12)*2, check_syndrome)
+        L1234 = four_dissection(L1,L2,L3,L4,l,target2+target1, target1,target2, False, verbose=verbose)
 
         if verbose:
             print("len list " + str(len(L1234)))
@@ -207,7 +172,7 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     ############# LEVEL 3 ##############
     ####################################
     if verbose:
-        print("\n\n LEVELLL 3\n\n")
+        print("\n\n LEVEL 3\n\n")
         print("Expected length 804 ")
 
     L1 = Lists_level_3[0]
@@ -215,96 +180,30 @@ def four_tree_list_tree(l,sub_s, H22, verbose = False):
     L3 = Lists_level_3[2]
     L4 = Lists_level_3[3]
 
-    L = four_dissection(L1,L2,L3,L4,l, (target_12+target_11)*2, target_11, l - (target_12+target_11)*2 +- target_11 , True, verbose)
-    List_L = L[matrix(F3, nrows=l,ncols=1,immutable = True)]
+    e = four_dissection(L1,L2,L3,L4,l, (target2+target1)*2, target1, l - (target2+target1)*2 +- target1 , True, H12=H12, sp=sp,target_weight=target_weight, verbose=verbose) 
     if verbose:
-        print("Number of solutions " + str(len(List_L)))
+        print("Number of solutions " + str(len(L)))
         print("end")
         print("Theoretical expected number of solutions: 804 ")
-    return List_L
-
-
-
-
-# ## Main implementation of SDP
-# # @param H partity check matrix
-# # @param s syndrome target
-# # @param weight weight taregt
-# # @param n,k,l usual code parameters
-# def SDP(H,s,n,k,l,weight):
-
-#     nb_iter = 0
-#     perm = Permutations(n).identity()
-
-
-#     target_weight =  weight-k-l #for probabilistic step
-#     print("target weight " + str(target_weight))
-#     print("")
-#     condition = True
-#     while(condition): #check about rank of instanced
-#         print("One iteration !")
-#         nb_iter = nb_iter + 1
-
-#         # Transform H such that it has desired form
-#         (Hp,sp,perm,S) = build_H(H, s,n,k,l)
-
-#         H22 = Hp[n-k-l:n-k,n-k-l:n]
-#         H12 = Hp[0:n-k-l,n-k-l:n]
-#         sub_s = matrix(sp[n-k-l:n-k], ncols = 1) 
-        
-#         # Do the 3,4-dissection
-#         List_L = four_tree_list_tree(l,sub_s, H22, verbose = False)
-                
-#         # check if target hamming weight is reached somewhere 
-#         hamming_weights = [ (sp[0:n-k-l]- vector(H12*e_bottom)).hamming_weight() for e_bottom in List_L ]
-#         print("Here is max hamming weight I found :  " +str(max(hamming_weights)))
-#         if(target_weight in hamming_weights): # we found a solution
-#             condition = False
-#             hamming_weights = np.array(hamming_weights)
-#             bool_hamming_weights = (hamming_weights == target_weight)
-
-#             e_bottom = matrix(np.array(List_L)[bool_hamming_weights][0], ncols = 1)
-#             e_top = matrix(sp[0:n-k-l], ncols = 1) - H12*e_bottom
-#             e = e_top.stack(e_bottom)
-#             PI = identity_matrix(F3,n)
-#             PI.permute_columns(perm)
-
-#             """ print("We have a solution ! Let's just test if the solutions are well formed")
-
-
-#             for e_bottom in List_L:        
-#                 e_top = matrix(sp[0:n-k-l], ncols = 1) - H12*e_bottom
-#                 e = e_top.stack(e_bottom)
-#                 if (H*PI*e != matrix(s, ncols = 1)):
-#                     print("Error !!!!!!!!!  merging list does not work")
-#                     print(vector(s))
-#                     print("")
-#                     print(vector(H*PI*e))
-#                     print("")
-#                     print(vector(H*e))
-#                     break"""
-            
-
-
-#             print(" \n\n nb iteration "+ str(nb_iter) + "\n\n")
-#             return PI*e, nb_iter
+    return e
 
 
 
 
 
-## Main implementation of SDP
-# @param H partity check matrix
+
+## implementation of SDP
+# @param H parity check matrix
 # @param s syndrome target
-# @param weight weight taregt
+# @param weight weight target
 # @param n,k,l usual code parameters
-def SDP(H,s,n,k,l,weight):
+def SDP(H,s,n,k,l,weight, verbose=False):
 
     nb_iter = 0
     perm = Permutations(n).identity()
 
 
-    target_weight =  weight-k-l #for probabilistic step
+    target_weight =  weight-k-l #for the probabilistic step
 
     print("target weight " + str(target_weight))
     print("")
@@ -312,6 +211,7 @@ def SDP(H,s,n,k,l,weight):
     # Do one gaussian elimination
     (Hp,sp,perm,S) = build_H(H, s,n,k,l)
 
+    #subdivide matrix H and syndrome
     H22 = Hp[n-k-l:n-k,n-k-l:n]
     H12 = Hp[0:n-k-l,n-k-l:n]
     sub_s = matrix(sp[n-k-l:n-k], ncols = 1) 
@@ -322,38 +222,16 @@ def SDP(H,s,n,k,l,weight):
         nb_iter = nb_iter + 1
 
         # Do the 3,4-dissection
-        List_L = four_tree_list_tree(l,sub_s, H22, verbose = False)
-                
-        # check if target hamming weight is reached somewhere 
-        hamming_weights = [ (sp[0:n-k-l]- vector(H12*e_bottom)).hamming_weight() for e_bottom in List_L ]
-        print("Here is max hamming weight I found :  " +str(max(hamming_weights)))
-        if(target_weight in hamming_weights): # we found a solution
-            condition = False
-            hamming_weights = np.array(hamming_weights)
-            bool_hamming_weights = (hamming_weights == target_weight)
+        e_bottom = four_tree_list_tree(l,sub_s, H22,H12, sp, target_weight,verbose)
 
-            e_bottom = matrix(np.array(List_L)[bool_hamming_weights][0], ncols = 1)
+        # means that we found a solution of desired hamming weight
+        if e_bottom!=0:
             e_top = matrix(sp[0:n-k-l], ncols = 1) - H12*e_bottom
             e = e_top.stack(e_bottom)
             PI = identity_matrix(F3,n)
             PI.permute_columns(perm)
-
-            """ print("We have a solution ! Let's just test if the solutions are well formed")
-
-
-            for e_bottom in List_L:        
-                e_top = matrix(sp[0:n-k-l], ncols = 1) - H12*e_bottom
-                e = e_top.stack(e_bottom)
-                if (H*PI*e != matrix(s, ncols = 1)):
-                    print("Error !!!!!!!!!  merging list does not work")
-                    print(vector(s))
-                    print("")
-                    print(vector(H*PI*e))
-                    print("")
-                    print(vector(H*e))
-                    break"""
-            
-
-
-            print(" \n\n nb iteration "+ str(nb_iter) + "\n\n")
             return PI*e, nb_iter
+        #List_L = four_tree_list_tree(l,sub_s, H22, target_weight,verbose)
+
+
+    return e, nb_iter
