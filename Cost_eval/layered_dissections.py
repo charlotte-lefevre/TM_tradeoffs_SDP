@@ -79,7 +79,7 @@ def real_is_calibrated_OK(n,k,l,r,c,h, Skkl):
 Applies the algorithms and returns the time and the memory 
 """
 
-## Applies classical algorithm  
+## Applies layered dissection algorithm  
 # @return (m,t) log2 of memory / complexity
 # @attention no check is done about the validity of the algorithm application : you mus call prior to this algorith is_classic_OK
 def apply_classic(R,Re,r,c,h, Skkl):
@@ -171,12 +171,11 @@ def real_apply_calibration(n,k,l,r,c,h,S,t, asymptotic=True):
         return (M*math.log(3,2)+coeff_mem, S*n*math.log(3,2)+coeff_times,alpha)
 
     
-## Applies memory blow up algorithm (or last algorithm) 
+## Applies the combined algorithm, with a mix of smoothing and solution calibration.
 # @param nbtargets int the bigger, the better precision but the longer time it takes
 # @return (m,t) log2 of memory / complexity or -1,-1 if algorithm is not applicable
 def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
         TrackMem = -1
-
         # MaxAlphabeta computation
         _,gainX  = find_best_magic(1,r)
         _,gainOfgain = find_best_magic(1,gainX+1)
@@ -220,10 +219,7 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
 
 
 
-
-
-
-## Applies memory blow up algorithm (or last algorithm) 
+## Applies the combined algorithm, with a mix of smoothing and solution calibration.
 # @param nbtargets int the bigger, the better precision but the longer time it takes
 # @return (m,t) log2 of memory / complexity or -1,-1 if algorithm is not applicable
 def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
@@ -279,15 +275,14 @@ def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
 
 
 
-## The main function to compute he times / memories, 
-# Skkl is computed using stirling approximation
-# @param Remin float minimum sub syndrome coefficient 
+## The main function to compute the times / memories.
+# @param Remin float minimum sub syndrome relative size 
 # @param Remax float ditto with max
-# @param nbRes int number of computed points
+# @param nbRes int number of computed points (linked to the precision)
 # @param nbtarget int number of computed targets for memBlowUp
-# @return (m,t, col, res) with m / t log2 of memory / time cost relative to code length
-# col indicates the corresponding regime for the point and res the target coefficient used.
-# In other words m[i] t[i] is a time/memory cost with algorithm col[i] and l coefficient res[i]
+# @return (M,T, col, res) tuple of arrayx with M[i] (resp. T[i]) log2 of memory (resp. time)) cost relative to code length
+# col keeps track of the used algorithm and res the target coefficient used.
+# In other words M[i] T[i] is a time/memory cost with algorithm col[i] and l coefficient res[i]
 def Apply(r, h, R, W, Remin, Remax, nbRes = 100, nbtarget =80):
     c = expo_complexity_dissection(r)
     Res = np.linspace(Remin, Remax, nbRes)
@@ -322,9 +317,9 @@ def Apply(r, h, R, W, Remin, Remax, nbRes = 100, nbtarget =80):
 # @param Remax int ditto with max
 # @param nbls int number of computed points
 # @param nbtarget int number of computed targets for memBlowUp
-# @return (m,t, col, ls) with m / t log2 of memory / time cost 
-# col indicates the corresponding regime for the point and ls the sub syndrome size used 
-# In other words m[i] t[i] is a time/memory cost with algorithm col[i] and l coefficient res[i]
+# @return (M,T, col, ls) with M[i] (resp. T[i]) log2 of memory (resp. time) cost 
+# col keeps track of the used algorithm and ls the sub syndrome size used 
+# In other words M[i] (resp. T[i]) is a memory (resp. time)  cost with algorithm col[i] and l coefficient res[i]
 def real_Apply(n, k, w, r, h, lmin, lmax, nbls = 100, nbtarget =80):
     c = expo_complexity_dissection(r)
     step = int((lmax-lmin)/nbls)

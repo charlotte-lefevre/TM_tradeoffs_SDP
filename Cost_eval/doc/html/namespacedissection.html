@@ -69,14 +69,14 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Implementation of cost computation of time-memory trade offs available with dissection.  
+<p>Implementation of cost computation of time-memory trade-offs with dissection.  
 <a href="namespacedissection.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3ee3d130e0600db527b69b06a37cf0cf"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedissection.html#a3ee3d130e0600db527b69b06a37cf0cf">dissection</a> (r, R, Re, W, nbMem=100, optimize=False)</td></tr>
-<tr class="memdesc:a3ee3d130e0600db527b69b06a37cf0cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes cost of dissection for the SubSetSum algorithm using stirling approximation  <a href="namespacedissection.html#a3ee3d130e0600db527b69b06a37cf0cf">More...</a><br /></td></tr>
-<tr class="separator:a3ee3d130e0600db527b69b06a37cf0cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d03cb9d1af0c5f669106f51fc66b47"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedissection.html#a58d03cb9d1af0c5f669106f51fc66b47">dissection</a> (r, R, Re, W, nbMem=100)</td></tr>
+<tr class="memdesc:a58d03cb9d1af0c5f669106f51fc66b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes the cost of dissection for the SubSet Sum algorithm using stirling approximation  <a href="namespacedissection.html#a58d03cb9d1af0c5f669106f51fc66b47">More...</a><br /></td></tr>
+<tr class="separator:a58d03cb9d1af0c5f669106f51fc66b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -87,10 +87,10 @@ Variables</h2></td></tr>
 <tr class="separator:af23e7a481d7dd749cafc64bb46c81113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementation of cost computation of time-memory trade offs available with dissection. </p>
+<div class="textblock"><p>Implementation of cost computation of time-memory trade-offs with dissection. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a3ee3d130e0600db527b69b06a37cf0cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ee3d130e0600db527b69b06a37cf0cf">&#9670;&nbsp;</a></span>dissection()</h2>
+<a id="a58d03cb9d1af0c5f669106f51fc66b47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58d03cb9d1af0c5f669106f51fc66b47">&#9670;&nbsp;</a></span>dissection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,13 +123,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>nbMem</em> = <code>100</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>optimize</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>nbMem</em> = <code>100</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,22 +133,20 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>computes cost of dissection for the SubSetSum algorithm using stirling approximation </p>
+<p>computes the cost of dissection for the SubSet Sum algorithm using stirling approximation </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nbMem</td><td>int default to 100. Fixed the number of potentially computed points for one fixed m. </td></tr>
-    <tr><td class="paramname">optimize</td><td>boolean. default is set to false. If you want to speedup the time it takes and do not mind to loose slightly in precision, set it to true. <br  />
- for more informations, go to section colors </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(m,t,colors) tuple of arrays, with m containing memories, t times colors colors, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to a dissection instanciation with memory cost <img class="formulaInl" alt="$M = 2^{nm}$" src="form_5.png" width="51" height="10"/>, time cost <img class="formulaInl" alt="$MT= 2^{nt}$" src="form_6.png" width="55" height="11"/> with n the size of the code and color[i] is associated to t[i] and m[i]. Informations about the colors of the points :<ul>
-<li>red : we are in a normal regime</li>
-<li>black : the granularity of the dissection is not fine enough for us to have solutions in O(1). To stay in this regime, it was necessary to balance the number of required solutions in the upper dissection and lower dissection</li>
-<li>colored points : doing the previous balancing does not work. Here, we desesperately try to reduce the size of the meet-in the middle. Spoiler : with Wave parameters, the gain induced by black and colored points is very neglectable. This is why parameter optimize is set to True </li>
+<dl class="section return"><dt>Returns</dt><dd>(M,T,colors) tuple of arrays, with M containing memories, T times and colors the associated colors, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to a dissection instanciation with memory cost <img class="formulaInl" alt="$M = 2^{nM[i]}$" src="form_27.png" width="61" height="13"/>, time cost <img class="formulaInl" alt="$T= 2^{nT[i]}$" src="form_28.png" width="55" height="13"/> with n the size of the code and color[i] is associated to T[i] and M[i]. Informations about the colors of the points :<ul>
+<li>red : classical dissection</li>
+<li>black : the granularity of the dissection is not fine enough for us to have solutions in O(1). To stay in this regime, it was necessary to balance the number of required solutions in the large dissection and small dissection</li>
+<li>colored points : when doing the previous balancing does not work. Here, we try to reduce the size of the small dissection. one color represents one <img class="formulaInl" alt="$m$" src="form_35.png" width="13" height="6"/> parameter in the dissection. </li>
 </ul>
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>This function has been desgined such that maximum allowed memory is the one of Wave state of the art algorithm. If you are not working with Wave parameters, you should change max_m value </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>This function has been designed such that maximum allowed memory is the one of Wave state of the art algorithm. If you are not working with Wave parameters, you should change max_m value </dd></dl>
 
 </div>
 </div>

@@ -73,12 +73,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a620f3c03d697322a0385c1ea1c318729"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a620f3c03d697322a0385c1ea1c318729">clean_array</a> (M_x, T_y, col=[], nocol=False)</td></tr>
-<tr class="memdesc:a620f3c03d697322a0385c1ea1c318729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Useful when we have plenty of memories and times and there are many points which are strictly better than others <br  />
- (m,t) is strictly better than (m',t') if m&lt;m' and t&lt;t'.  <a href="namespaceutils.html#a620f3c03d697322a0385c1ea1c318729">More...</a><br /></td></tr>
-<tr class="separator:a620f3c03d697322a0385c1ea1c318729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b2728b0c9e821ad244e7aa14632af5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#ad8b2728b0c9e821ad244e7aa14632af5">clean_array</a> (M_x, T_y, col=[])</td></tr>
+<tr class="memdesc:ad8b2728b0c9e821ad244e7aa14632af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Useful when we have plenty of memories and times and there are many points which are strictly better than others <br  />
+ (m,t) is strictly better than (m',t') if m&lt;m' and t&lt;t'.  <a href="namespaceutils.html#ad8b2728b0c9e821ad244e7aa14632af5">More...</a><br /></td></tr>
+<tr class="separator:ad8b2728b0c9e821ad244e7aa14632af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20f2a1a16e4930e995b295096348a04b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#a20f2a1a16e4930e995b295096348a04b">hq</a> (x)</td></tr>
-<tr class="memdesc:a20f2a1a16e4930e995b295096348a04b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ternary entropy Useful to compute approximations.  <a href="namespaceutils.html#a20f2a1a16e4930e995b295096348a04b">More...</a><br /></td></tr>
+<tr class="memdesc:a20f2a1a16e4930e995b295096348a04b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ternary entropy, useful to compute approximations.  <a href="namespaceutils.html#a20f2a1a16e4930e995b295096348a04b">More...</a><br /></td></tr>
 <tr class="separator:a20f2a1a16e4930e995b295096348a04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b8832e6a33061219b6b64bb36423bf"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutils.html#ad4b8832e6a33061219b6b64bb36423bf">skkl</a> (Re, R, W)</td></tr>
 <tr class="memdesc:ad4b8832e6a33061219b6b64bb36423bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crutial function to evaluate asymptotic time cost of the subset sum.  <a href="namespaceutils.html#ad4b8832e6a33061219b6b64bb36423bf">More...</a><br /></td></tr>
@@ -109,8 +109,8 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Useful functions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a620f3c03d697322a0385c1ea1c318729"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a620f3c03d697322a0385c1ea1c318729">&#9670;&nbsp;</a></span>clean_array()</h2>
+<a id="ad8b2728b0c9e821ad244e7aa14632af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8b2728b0c9e821ad244e7aa14632af5">&#9670;&nbsp;</a></span>clean_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,13 +131,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>col</em> = <code>[]</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>nocol</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>col</em> = <code>[]</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,15 +212,15 @@ Functions</h2></td></tr>
 . </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>integer : gives the dissection degree </td></tr>
+    <tr><td class="paramname">r</td><td>integer : gives the dissection used (ie number of lists on the leaves) </td></tr>
     <tr><td class="paramname">m</td><td>the memory unit </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>(r_magic, g) such that <br  />
 <ul>
-<li>r_magic is the biggest number in m magic sequence such that r_magic &gt; r</li>
-<li>g is the gain associated to r_magic. Therefore it is the biggest possible expectable gain associated to r-disssection </li>
+<li>r_magic is the largest number in m-magic sequence such that r_magic &gt; r</li>
+<li>g is the gain associated to r_magic. Therefore it is the largest possible expectable gain associated to r-disssection </li>
 </ul>
 </dd></dl>
 
@@ -278,7 +272,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ternary entropy Useful to compute approximations. </p>
+<p>Ternary entropy, useful to compute approximations. </p>
 
 </div>
 </div>
@@ -348,7 +342,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>integer the memory unit. If base list cardinal is <img class="formulaInl" alt="$3^n$" src="form_1.png" width="14" height="9"/> then maximal allowed memory is <img class="formulaInl" alt="$3^{nm}$" src="form_2.png" width="23" height="9"/> </td></tr>
-    <tr><td class="paramname">i</td><td>integer is such that i &lt; m and the base dissection is a i 2m+2i meet-in-the-middle (gain i) </td></tr>
+    <tr><td class="paramname">i</td><td>integer is such that i &lt; m and the base case of the sequence is a i 2m+2i meet-in-the-middle (gain i) </td></tr>
     <tr><td class="paramname">x</td><td>integer index in the sub sequence with fixed i. <br  />
  </td></tr>
   </table>
@@ -397,15 +391,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Exact version of skkl function It computes the real average expected number of soluions for the probabilistic step. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n</td><td>int length of the code </td></tr>
-    <tr><td class="paramname">w</td><td>int target weight </td></tr>
-    <tr><td class="paramname">k</td><td>int code dimension </td></tr>
-    <tr><td class="paramname">l</td><td>int sub-target size </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section return"><dt>Returns</dt><dd>float log3 of needed solutions for probabilistic step divided by n </dd></dl>
 
 </div>
@@ -444,15 +429,7 @@ Functions</h2></td></tr>
 
 <p>Crutial function to evaluate asymptotic time cost of the subset sum. </p>
 <p><br  />
- The computation is based on Stirling approximation </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">Re</td><td>float sub problem rate : Re is such that l = Re * n </td></tr>
-    <tr><td class="paramname">R</td><td>float code rate : R is such that k = R * n </td></tr>
-    <tr><td class="paramname">W</td><td>float relative rate : W such that w = W*n </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>float approximated log3 of needed solutions for probabilistic step divided by n </dd></dl>
+ The computation is based on Stirling approximation </p><dl class="section return"><dt>Returns</dt><dd>float approximated log3 of needed solutions for probabilistic step divided by n </dd></dl>
 
 </div>
 </div>

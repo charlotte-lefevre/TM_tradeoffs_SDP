@@ -74,7 +74,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a03e43e00aa15e846486a11fb7701f18a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedissection__optimize.html#a03e43e00aa15e846486a11fb7701f18a">compute_best_complexity_dissection</a> (r=120, final_treatement=True)</td></tr>
-<tr class="memdesc:a03e43e00aa15e846486a11fb7701f18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes empirically the best time-memory plot for a dissection with Wave parameters and given number of lists  <a href="namespacedissection__optimize.html#a03e43e00aa15e846486a11fb7701f18a">More...</a><br /></td></tr>
+<tr class="memdesc:a03e43e00aa15e846486a11fb7701f18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes empirically the best time-memory trade-offs reachable by the dissection with Wave parameters and given number of lists  <a href="namespacedissection__optimize.html#a03e43e00aa15e846486a11fb7701f18a">More...</a><br /></td></tr>
 <tr class="separator:a03e43e00aa15e846486a11fb7701f18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -106,16 +106,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>computes empirically the best time-memory plot for a dissection with Wave parameters and given number of lists </p>
+<p>computes empirically the best time-memory trade-offs reachable by the dissection with Wave parameters and given number of lists </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>int the dissection order </td></tr>
     <tr><td class="paramname">final_treatement</td><td>boolean default true. True iff we just want to keep the best points </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>all used Re's coefficients (relative subsetSum target size) <br  />
- Note that there was already a precomputation phase, which was rather "looking roughly at the best Re's candidates". The code here is just a precise way to get the best possible points </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>all used Re's coefficients (relative Subset Sum target size) <br  />
+ Note that this function does not include a precomputation phase, which consits in "looking roughly at the best Re's candidates". The code here is just a precise way to get the best possible points </dd></dl>
 
 </div>
 </div>

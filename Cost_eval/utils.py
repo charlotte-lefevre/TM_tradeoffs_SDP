@@ -13,7 +13,7 @@ from sage.arith.all import *
 # @param Ty the array containing all times so that M_x[i] is associated to T_y[i] for all i
 # @param col an optional array which is strongly associated to memory and times (ie \f$\forall i\f$ col[i] is associated to M_x[i] and T_y[i])
 # @returns epurated arrays (M_x, T_y) and if an array col is provided it also returns cols epurated
-def clean_array(M_x,T_y, col = [], nocol = False):
+def clean_array(M_x,T_y, col = []):
     l = len(M_x)
     i = 0
     collen = len(col)
@@ -43,8 +43,7 @@ def clean_array(M_x,T_y, col = [], nocol = False):
 
 
 
-##  Ternary entropy
-# Useful to compute approximations
+##  Ternary entropy, useful to compute approximations
 def hq(x):
     if x > 1:
         raise Exception ("Ternary entropy : out ouf bound input : x = "  + str(x))
@@ -56,11 +55,8 @@ def hq(x):
         return -(1-x)*math.log(1-x,3)
     return -(1-x)*math.log(1-x,3)-x*math.log(x/2,3)
 
-## Crutial function to evaluate asymptotic time cost of the subset sum. \n 
+## Crutial function to evaluate asymptotic time cost of the Subset Sum. \n 
 # The computation is based on Stirling approximation
-# @param Re float sub problem rate : Re is such that l = Re * n
-# @param R float code rate : R is such that k = R * n
-# @param W float relative rate : W such that w = W*n
 # @returns float approximated log3 of needed solutions for probabilistic step divided by n
 def skkl(Re,R, W):
     C = (W-R-Re)/(1-R-Re)
@@ -71,10 +67,6 @@ def skkl(Re,R, W):
 
 ## Exact version of skkl function
 # It computes the real average expected number of soluions for the probabilistic step
-# @param n int length of the code
-# @param w int target weight
-# @param k int code dimension
-# @param l int sub-target size
 # @returns float log3 of needed solutions for probabilistic step divided by n
 def real_skkl(n,w,k,l):
     val = min(3**(n-k-l), binomial(n,w)*2**(w)*3**(-l)) /(binomial(n-k-l,w-k-l)*2**(w-k-l)) 
@@ -92,18 +84,18 @@ def magic(x):
 ## Magic sequence with any m parameter \n 
 # Every i parameter provides a sub sequence, where the gain is increased by m at each step.
 # @param  m integer the memory unit. If base list cardinal is \f$3^n\f$ then maximal allowed memory is \f$3^{nm}\f$ 
-# @param i integer is such that i < m and the base dissection is a i 2m+2i meet-in-the-middle (gain i)
+# @param i integer is such that i < m and the base case of the sequence is a i 2m+2i meet-in-the-middle (gain i)
 # @param x integer index in the sub sequence with fixed i. \n 
 # @returns magic[m,i,x] integer
 def magic_m(m,i,x):
     return magic(x) * m + (x+2)*i
 
 ## Generalized magic sequence \n 
-# @param r integer : gives the dissection degree
+# @param r integer : gives the dissection used (ie number of lists on the leaves)
 # @param m the memory unit
 # @returns (r_magic, g) such that \n
-# * r_magic is the biggest number in m magic sequence such that r_magic > r
-# * g is the gain associated to r_magic. Therefore it is the biggest possible expectable gain associated to r-disssection
+# * r_magic is the largest number in m-magic sequence such that r_magic > r
+# * g is the gain associated to r_magic. Therefore it is the largest possible expectable gain associated to r-disssection
 def find_best_magic(m,r):
     if r < 2*m:
         return (0,0)

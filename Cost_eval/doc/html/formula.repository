@@ -24,3 +24,15 @@
 \_form#23=5x6:$c$
 \_form#24=14x10:$M$
 \_form#25=18x10:$M^c$
+\_form#26=75x14:$n \times Reused[i]$
+\_form#27=61x13:$M = 2^{nM[i]}$
+\_form#28=55x13:$T= 2^{nT[i]}$
+\_form#29=49x13:$T= 2^{T[i]}$
+\_form#30=55x13:$M = 2^{M[i]}$
+\_form#31=61x13:$MT= 2^{T [i]}$
+\_form#32=59x10:$k := R \times n$
+\_form#33=63x10:$l := Re \times n$
+\_form#34=66x10:$w := W \times n$
+\_form#35=13x6:$m$
+\_form#36=224x14:$memory = \log_2(M)/n, time = \log_2(T)/n$
+\_form#37=49x13:$T= 2^{T [i]}$

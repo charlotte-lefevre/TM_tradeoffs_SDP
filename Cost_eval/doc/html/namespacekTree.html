@@ -74,10 +74,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a53cd47a307222f5016672b2238a194e2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacekTree.html#a53cd47a307222f5016672b2238a194e2">kTree</a> (R, W, npoints=200, Remax=0, Remin=0.01)</td></tr>
-<tr class="memdesc:a53cd47a307222f5016672b2238a194e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes cost of <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granulairty  <a href="namespacekTree.html#a53cd47a307222f5016672b2238a194e2">More...</a><br /></td></tr>
+<tr class="memdesc:a53cd47a307222f5016672b2238a194e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes costs of the <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have the lowest possible memory and granularty  <a href="namespacekTree.html#a53cd47a307222f5016672b2238a194e2">More...</a><br /></td></tr>
 <tr class="separator:a53cd47a307222f5016672b2238a194e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8a1ff50517a47096c8873d4c6d1f84b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacekTree.html#aa8a1ff50517a47096c8873d4c6d1f84b">smoothed_kTree</a> (R, W, npoints=200, Remax=0, Remin=0.01)</td></tr>
-<tr class="memdesc:aa8a1ff50517a47096c8873d4c6d1f84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes cost of smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granulairty.  <a href="namespacekTree.html#aa8a1ff50517a47096c8873d4c6d1f84b">More...</a><br /></td></tr>
+<tr class="memdesc:aa8a1ff50517a47096c8873d4c6d1f84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes cost of smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granularity.  <a href="namespacekTree.html#aa8a1ff50517a47096c8873d4c6d1f84b">More...</a><br /></td></tr>
 <tr class="separator:aa8a1ff50517a47096c8873d4c6d1f84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a030bed12fc4aaf3664b18b9bbc6687"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacekTree.html#a3a030bed12fc4aaf3664b18b9bbc6687">real_kTree</a> (n, k, w, npoints=200, lmin=2, lmax=0)</td></tr>
 <tr class="memdesc:a3a030bed12fc4aaf3664b18b9bbc6687"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes real cost of <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a>.  <a href="namespacekTree.html#a3a030bed12fc4aaf3664b18b9bbc6687">More...</a><br /></td></tr>
@@ -133,18 +133,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>computes cost of <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granulairty </p>
+<p>computes costs of the <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have the lowest possible memory and granularty </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">R</td><td>float code rate </td></tr>
-    <tr><td class="paramname">W</td><td>float relative weight </td></tr>
-    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph </td></tr>
-    <tr><td class="paramname">Remin</td><td>float min coefficient of syndrome subproblem </td></tr>
+    <tr><td class="paramname">npoints</td><td>int the number of points used to compute on the graph (in other words the precision of the graph) </td></tr>
+    <tr><td class="paramname">Remin</td><td>float min relative size of sub-syndrome </td></tr>
     <tr><td class="paramname">Remax</td><td>float ditto with max. If equal to 0, it will take the maximal possible value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients , aused number of levels If n is the code size, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with target sub syndrome coefficient equal to Reused[i] with aused[i] levels memory cost <img class="formulaInl" alt="$M = 2^{nm}$" src="form_5.png" width="51" height="10"/>, time cost <img class="formulaInl" alt="$MT= 2^{nt}$" src="form_6.png" width="55" height="11"/>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(M,T,Reused, aused) tuple of arrays, with M containing memories, T times , Reused sub-syndrome relative sizes , and aused the number of levels If n is the code size, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to the <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with sub-syndrome size equal to <img class="formulaInl" alt="$n \times Reused[i]$" src="form_26.png" width="75" height="14"/> with aused[i] levels, memory cost <img class="formulaInl" alt="$M = 2^{nM[i]}$" src="form_27.png" width="61" height="13"/>, time cost <img class="formulaInl" alt="$T= 2^{nT[i]}$" src="form_28.png" width="55" height="13"/>. </dd></dl>
 
 </div>
 </div>
@@ -199,19 +197,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>computes real cost of <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a>. </p>
-<p>For each l value, the number of floors is optimized to have lowest possible memory and granulairty </p><dl class="params"><dt>Parameters</dt><dd>
+<p>For each l value, the number of floors is optimized to have lowest possible memory and granularity </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>int length of the code </td></tr>
-    <tr><td class="paramname">w</td><td>int target weight </td></tr>
-    <tr><td class="paramname">k</td><td>int code dimension </td></tr>
-    <tr><td class="paramname">l</td><td>int sub-target size </td></tr>
-    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph </td></tr>
+    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph (in other words the precision of the graph) </td></tr>
     <tr><td class="paramname">lmin</td><td>int min size of syndrome subproblem </td></tr>
     <tr><td class="paramname">lmax</td><td>int ditto with max. If equal to 0, it will take the maximal possible value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with target sub syndrome coefficient equal to Reused[i] with memory cost <img class="formulaInl" alt="$M = 2^{m}$" src="form_7.png" width="45" height="10"/>, time cost <img class="formulaInl" alt="$MT= 2^{t}$" src="form_8.png" width="49" height="11"/>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(M,T,lused, aused) tuple of arrays, with m containing memories, t times , l sub-syndrome sizes. <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to the <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with sub-syndrome size equal to lused[i] with memory cost <img class="formulaInl" alt="$M = 2^{m}$" src="form_7.png" width="45" height="10"/>, time cost <img class="formulaInl" alt="$T= 2^{T[i]}$" src="form_29.png" width="49" height="13"/>. </dd></dl>
 
 </div>
 </div>
@@ -266,19 +260,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>computes real cost of smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a>. </p>
-<p>For each l value, the number of floors is optimized to have lowest possible memory and granulairty </p><dl class="params"><dt>Parameters</dt><dd>
+<p>For each l value, the number of floors is optimized to have lowest possible memory and granularity </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>int length of the code </td></tr>
-    <tr><td class="paramname">w</td><td>int target weight </td></tr>
-    <tr><td class="paramname">k</td><td>int code dimension </td></tr>
-    <tr><td class="paramname">l</td><td>int sub-target size </td></tr>
-    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph </td></tr>
+    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph (in other words the precision of the graph) </td></tr>
     <tr><td class="paramname">lmin</td><td>int min size of syndrome subproblem </td></tr>
     <tr><td class="paramname">lmax</td><td>int ditto with max. If equal to 0, it will take the maximal possible value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(m,t,Reused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with target sub syndrome coefficient equal to Reused[i] with memory cost <img class="formulaInl" alt="$M = 2^{m}$" src="form_7.png" width="45" height="10"/>, time cost <img class="formulaInl" alt="$MT= 2^{t}$" src="form_8.png" width="49" height="11"/>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(M,T,lused) tuple of arrays, with m containing memories, t times , lused sub-syndrome sizes. <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to the smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with sub-syndrome size equal to lused[i] with memory cost <img class="formulaInl" alt="$M = 2^{M[i]}$" src="form_30.png" width="55" height="13"/>, time cost <img class="formulaInl" alt="$T= 2^{T [i]}$" src="form_37.png" width="49" height="13"/>. </dd></dl>
 
 </div>
 </div>
@@ -326,18 +316,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Computes cost of smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granulairty. </p>
+<p>Computes cost of smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> using Stirling approximation For each l value, the number of floors is optimized to have lowest possible memory and granularity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">R</td><td>float code rate </td></tr>
-    <tr><td class="paramname">W</td><td>float relative weight </td></tr>
-    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph </td></tr>
-    <tr><td class="paramname">Remin</td><td>float min coefficient of syndrome subproblem </td></tr>
+    <tr><td class="paramname">npoints</td><td>int the number of points to compute on the graph (in other words the precision of the graph) </td></tr>
+    <tr><td class="paramname">Remin</td><td>float minimum sub syndrome relative size </td></tr>
     <tr><td class="paramname">Remax</td><td>float ditto with max. If equal to 0, it will take the maximal possible value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients , aused number of levels If n is the code size, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated with target sub syndrome coefficient equal to Reused[i] with aused[i] levels memory cost <img class="formulaInl" alt="$M = 2^{nm}$" src="form_5.png" width="51" height="10"/>, time cost <img class="formulaInl" alt="$MT= 2^{nt}$" src="form_6.png" width="55" height="11"/>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(M,T,Reused, aused) tuple of arrays, with M containing memories, T times , Reused sub-syndrome relative sizes , and aused the number of levels If n is the code size, <img class="formulaInl" alt="$\forall$" src="form_4.png" width="9" height="10"/> i, one point corresponds to the smoothed <a class="el" href="namespacekTree.html" title="Implementation of cost function of ktree and smoothed ktree algorithm.">kTree</a> instanciated sub-syndrome size equal to <img class="formulaInl" alt="$n \times Reused[i]$" src="form_26.png" width="75" height="14"/> with aused[i] levels, memory cost <img class="formulaInl" alt="$M = 2^{nM[i]}$" src="form_27.png" width="61" height="13"/>, time cost <img class="formulaInl" alt="$T= 2^{nT[i]}$" src="form_28.png" width="55" height="13"/>. </dd></dl>
 
 </div>
 </div>

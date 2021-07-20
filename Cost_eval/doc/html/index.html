@@ -68,46 +68,40 @@ $(function() {
 <div class="textblock"><p><a class="anchor" id="md_README"></a> </p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Aim</h1>
-<p>This project aims at computing time-memory trade-offs costs for ternary syndrome decoding in <img class="formulaInl" alt="$F_3$" src="form_9.png" width="13" height="11"/> with large weight. The most efficient state-to-the-art algorithms use a framework called PGE+SS framework. In the latter, the most expansive part is due to a step called SubsetSum step. Here we aim at computing the Time/Memory cost of a pallet of birthday-based algorithms to solve the Subset Sum step We aim at providing a pallet of algorithms, each one presenting a different trade-off Everything here has been created with Wave signature scheme in mind, so only the most interesting tarde offs in wave signature scheme case are exhibited <br  />
- <b>Warning</b> There is No implementation of any algorithm here, the aim here is just to compute asymptotic cost of algorithms to help the user to select his prefered trade off.</p>
+<p>This project aims at computing time-memory trade-offs costs for ternary syndrome decoding in <img class="formulaInl" alt="$F_3$" src="form_9.png" width="13" height="11"/> with large weight and Wave signature scheme parameters. The most efficient state-to-the-art algorithms use a framework called PGE+SS framework. In the latter, the most expensive part is due to a step called Subset Sum step. Here we aim at computing the Time/Memory cost of a range of birthday-based algorithms to solve the Subset Sum step. Everything here has been created with Wave signature scheme in mind, so only the most interesting trade offs in the Wave signature scheme case are exhibited. <br  />
+ <b>Warning</b> There is no implementation of any algorithm here, the aim here is just to compute the asymptotic cost of algorithms to help to select the prefered trade off.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
-Requirements</h1>
-<ul>
-<li>Sagemath 9.2</li>
-<li>Python 3.9.2</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md3"></a>
 Common notation and terminologies</h1>
 <p>In the functions used here, the notation is quite redundant. We define here the most common terminologies.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Two different regimes</h2>
-<p>The cost can be computed in two regimes, the <em>asymptotic</em> one and the so-called '<em>real</em> 'one. In the <em>asymptotc</em> regime, the code size <img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> is not fixed, and the aim is to derive an estimation of the cost when <img class="formulaInl" alt="$n \rightarrow +\infty$" src="form_11.png" width="50" height="10"/>. In other words, multplicative constants are not taken into account, and only eexponential coefficients are considered. On the countrary, the '<em>real</em>' regimes aims at provideing more accurate cost estimation. Here, the code size is fixed and multilicartive constants are consdiered. <br  />
+<p>The cost can be computed in two regimes, the <em>asymptotic</em> one and the so-called '<em>bit cost</em> 'one. In the <em>asymptotc</em> regime, the code size <img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> is not fixed, and the aim is to derive an estimation of the cost when <img class="formulaInl" alt="$n \rightarrow +\infty$" src="form_11.png" width="50" height="10"/>. In other words, multplicative constants are not taken into account, and only exponential coefficients are considered. On the countrary, the '<em>bit cost</em>' regimes aims at providing a more accurate cost estimation. Here, the code size is fixed and multiplicative constants are considered. It aims at providing a cost in terms of number of bits stored / number of bit operations done.<br  />
 </p>
-<p>In both cases, the memory and time costs are given in the <em>logarithmic</em> scale, and relative to <img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> in asymptotic cost (<em>viz.</em> <img class="formulaInl" alt="$m = \log_2(M)/n$" src="form_12.png" width="88" height="14"/>)</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<p>In both cases, the memory and time costs are given in the <em>logarithmic</em> scale, and relative to <img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> in asymptotic cost (<em>viz.</em> <img class="formulaInl" alt="$memory = \log_2(M)/n, time = \log_2(T)/n$" src="form_36.png" width="224" height="14"/>)</p>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Most common parameters</h2>
-<p>To avoid a heavy redundancy, we define here the most used parameters in the project's functions</p>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<p>To avoid redundant comments, we define here the most used parameters in the project's functions:</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
 Code parameters</h3>
 <ul>
 <li><img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> is the size of the code.</li>
-<li><img class="formulaInl" alt="$k$" src="form_13.png" width="6" height="10"/> is the code dimension. In asymptotic notation, <img class="formulaInl" alt="$k := R \cdot n$" src="form_14.png" width="53" height="10"/></li>
-<li><img class="formulaInl" alt="$l$" src="form_15.png" width="4" height="10"/> is size of the target (or size of sub syndrome decoding problem). In asymptotic notation, <img class="formulaInl" alt="$l := Re \cdot n$" src="form_16.png" width="56" height="10"/></li>
-<li><img class="formulaInl" alt="$w$" src="form_17.png" width="10" height="6"/> is the weight target in SDP. In asymptotic notation, <img class="formulaInl" alt="$w := W \cdot n$" src="form_18.png" width="60" height="10"/></li>
+<li><img class="formulaInl" alt="$k$" src="form_13.png" width="6" height="10"/> is the code dimension. In asymptotic notation, <img class="formulaInl" alt="$k := R \times n$" src="form_32.png" width="59" height="10"/></li>
+<li><img class="formulaInl" alt="$l$" src="form_15.png" width="4" height="10"/> is size of the target (or size of sub syndrome decoding problem). In asymptotic notation, <img class="formulaInl" alt="$l := Re \times n$" src="form_33.png" width="63" height="10"/></li>
+<li><img class="formulaInl" alt="$w$" src="form_17.png" width="10" height="6"/> is the weight target in SDP. In asymptotic notation, <img class="formulaInl" alt="$w := W \times n$" src="form_34.png" width="66" height="10"/></li>
 <li><img class="formulaInl" alt="$Skkl$" src="form_19.png" width="26" height="10"/> is the <img class="formulaInl" alt="$\log_3$" src="form_20.png" width="23" height="14"/> os desired number of solutions for Probabilistic step (divided by <img class="formulaInl" alt="$n$" src="form_10.png" width="9" height="6"/> in the <em>asymptotic</em> regime)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 (Layered) dissection parameters</h3>
 <ul>
 <li><img class="formulaInl" alt="$r$" src="form_21.png" width="8" height="6"/> is such that base dissection is an <img class="formulaInl" alt="$r$" src="form_21.png" width="8" height="6"/>-dissection</li>
 <li><img class="formulaInl" alt="$h$" src="form_22.png" width="8" height="10"/> is the number of levels in the tree</li>
 <li><img class="formulaInl" alt="$c$" src="form_23.png" width="5" height="6"/> is the dissection work-factor. In other words, an exhaustive dissection with memory <img class="formulaInl" alt="$M$" src="form_24.png" width="14" height="10"/> has time cost <img class="formulaInl" alt="$M^c$" src="form_25.png" width="18" height="10"/></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Sample examples</h1>
 <p>Examples are contained in "Examples" directory</p><ul>
-<li><code>Mainplots.ipynb</code> contains our main resuts</li>
-<li><code>DissectionPlot.ipynb</code> calles the dissection algorithm</li>
+<li><code>Mainplots.ipynb</code> contains our main results</li>
+<li><code>DissectionPlot.ipynb</code> plot the dissection algorithm</li>
 <li><code>plot_one_layered_dissection.ipynb</code> plots the time memory graph of one dissection </li>
 </ul>
 </div></div><!-- PageDoc -->

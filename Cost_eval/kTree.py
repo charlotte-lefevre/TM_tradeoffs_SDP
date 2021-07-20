@@ -5,15 +5,13 @@ import math
 import numpy as np
 from utils import skkl, real_skkl
 
-## computes cost of kTree using Stirling approximation
-# For each l value, the number of floors is optimized to have lowest possible memory and granulairty 
-# @param R float code rate
-# @param W float relative weight
-# @param npoints int the number of points to compute on the graph
-# @param Remin float min coefficient of syndrome subproblem
+## computes costs of the kTree using Stirling approximation
+# For each l value, the number of floors is optimized to have the lowest possible memory and granularty 
+# @param npoints int the number of points used to compute on the graph (in other words the precision of the graph)
+# @param Remin float min relative size of sub-syndrome
 # @param Remax float ditto with max. If equal to 0, it will take the maximal possible value
-# @return (m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients ,  aused number of levels 
-# If n is the code size, \f$\forall\f$ i, one point corresponds to kTree instanciated with target sub syndrome coefficient equal to Reused[i] with aused[i] levels memory cost \f$M = 2^{nm}\f$, time cost \f$MT= 2^{nt}\f$. 
+# @return (M,T,Reused, aused) tuple of arrays, with M containing memories, T times , Reused sub-syndrome relative sizes , and  aused the number of levels 
+# If n is the code size, \f$\forall\f$ i, one point corresponds to the kTree instanciated with sub-syndrome size equal to \f$n \times Reused[i]\f$ with aused[i] levels, memory cost \f$M = 2^{nM[i]}\f$, time cost \f$T= 2^{nT[i]}\f$. 
 def kTree(R, W,npoints=200,Remax=0, Remin=0.01):
     
     if Remax == 0:
@@ -36,14 +34,12 @@ def kTree(R, W,npoints=200,Remax=0, Remin=0.01):
     return (mems,complexities, Reused,aused)
 
 ## Computes cost of smoothed kTree using Stirling approximation
-# For each l value, the number of floors is optimized to have lowest possible memory and granulairty 
-# @param R float code rate
-# @param W float relative weight
-# @param npoints int the number of points to compute on the graph
-# @param Remin float min coefficient of syndrome subproblem
+# For each l value, the number of floors is optimized to have lowest possible memory and granularity 
+# @param npoints int the number of points to compute on the graph (in other words the precision of the graph)
+# @param Remin  float minimum sub syndrome relative size
 # @param Remax float ditto with max. If equal to 0, it will take the maximal possible value
-# @return (m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients ,  aused number of levels 
-# If n is the code size, \f$\forall\f$ i, one point corresponds to kTree instanciated with target sub syndrome coefficient equal to Reused[i] with aused[i] levels memory cost \f$M = 2^{nm}\f$, time cost \f$MT= 2^{nt}\f$. 
+# @return (M,T,Reused, aused) tuple of arrays, with M containing memories, T times ,  Reused sub-syndrome relative sizes ,  and aused the number of levels 
+# If n is the code size, \f$\forall\f$ i, one point corresponds to the smoothed kTree instanciated sub-syndrome size equal to \f$n \times Reused[i]\f$ with aused[i] levels, memory cost \f$M = 2^{nM[i]}\f$, time cost \f$T= 2^{nT[i]}\f$. 
 def smoothed_kTree(R, W,npoints=200,Remax=0, Remin=0.01):
     
     if Remax == 0:
@@ -70,16 +66,12 @@ def smoothed_kTree(R, W,npoints=200,Remax=0, Remin=0.01):
 
 
 ## computes real cost of kTree.
-# For each l value, the number of floors is optimized to have lowest possible memory and granulairty 
-# @param n int length of the code
-# @param w int target weight
-# @param k int code dimension
-# @param l int sub-target size
-# @param npoints int the number of points to compute on the graph
+# For each l value, the number of floors is optimized to have lowest possible memory and granularity 
+# @param npoints int the number of points to compute on the graph (in other words the precision of the graph)
 # @param lmin int min size of syndrome subproblem
 # @param lmax int ditto with max. If equal to 0, it will take the maximal possible value
-# @return (m,t,Reused, aused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients
-# \f$\forall\f$ i, one point corresponds to kTree instanciated with target sub syndrome coefficient equal to Reused[i] with  memory cost \f$M = 2^{m}\f$, time cost \f$MT= 2^{t}\f$. 
+# @return (M,T,lused, aused) tuple of arrays, with m containing memories, t times , l sub-syndrome sizes.
+# \f$\forall\f$ i, one point corresponds to the kTree instanciated with sub-syndrome size equal to lused[i] with  memory cost \f$M = 2^{m}\f$, time cost \f$T= 2^{T[i]}\f$. 
 def real_kTree(n,k, w,npoints=200,lmin = 2, lmax =0):
     if lmax == 0:
         lmax = w-k
@@ -105,16 +97,12 @@ def real_kTree(n,k, w,npoints=200,lmin = 2, lmax =0):
 
 
 ## computes real cost of smoothed kTree.
-# For each l value, the number of floors is optimized to have lowest possible memory and granulairty 
-# @param n int length of the code
-# @param w int target weight
-# @param k int code dimension
-# @param l int sub-target size
-# @param npoints int the number of points to compute on the graph
+# For each l value, the number of floors is optimized to have lowest possible memory and granularity 
+# @param npoints int the number of points to compute on the graph (in other words the precision of the graph)
 # @param lmin int min size of syndrome subproblem
 # @param lmax int ditto with max. If equal to 0, it will take the maximal possible value
-# @return (m,t,Reused) tuple of arrays, with m containing memories, t times , Reused syndrome sub-problem coefficients 
-# \f$\forall\f$ i, one point corresponds to kTree instanciated with target sub syndrome coefficient equal to Reused[i] with memory cost \f$M = 2^{m}\f$, time cost \f$MT= 2^{t}\f$. 
+# @return (M,T,lused) tuple of arrays, with m containing memories, t times , lused sub-syndrome sizes.
+# \f$\forall\f$ i, one point corresponds to the smoothed kTree instanciated with sub-syndrome size equal to lused[i] with memory cost \f$M = 2^{M[i]}\f$, time cost \f$T= 2^{T [i]}\f$. 
 def real_smoothed_kTree(n,k,w,npoints=200,lmin = 2,lmax =0):
     if lmax == 0:
         lmax = w-k
