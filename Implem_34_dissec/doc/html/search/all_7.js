@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['return_5fall_5flc_5fmatrix_11',['return_all_LC_matrix',['../namespaceutils.html#aa3b241c72082c4d103e1944b168c9448',1,'utils']]]
+  ['l_13',['l',['../namespacemain.html#a56183b61e42f3199f35048092c1e2668',1,'main']]],
+  ['layered_5fdissec_14',['layered_dissec',['../namespacemerges.html#a0402c772654f45757a461ec899fde110',1,'merges']]]
 ];

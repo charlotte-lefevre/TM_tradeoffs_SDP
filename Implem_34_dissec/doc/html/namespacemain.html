@@ -74,9 +74,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af613cea4cba4fb7de8e40896b3368945"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#af613cea4cba4fb7de8e40896b3368945">main</a> ()</td></tr>
-<tr class="memdesc:af613cea4cba4fb7de8e40896b3368945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function which shall be used to test POC of ternary syndrome decoding using a 3,4-dissection It samples uniformly a partity check matrix and syndrome and looks for solution to SDP.  <a href="namespacemain.html#af613cea4cba4fb7de8e40896b3368945">More...</a><br /></td></tr>
-<tr class="separator:af613cea4cba4fb7de8e40896b3368945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40290f7a01a5282c62165e52049cb3f7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a40290f7a01a5282c62165e52049cb3f7">main</a> (<a class="el" href="namespacemain.html#a5cdeed5c5ce0bb8d48376fb9223e3b18">verbose</a>=True)</td></tr>
+<tr class="memdesc:a40290f7a01a5282c62165e52049cb3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function which shall be used to test POC of ternary syndrome decoding using a 3,4-dissection It samples uniformly a parity check matrix and syndrome and looks for solution to the <a class="el" href="namespaceSDP.html" title="contains the function doing the PGE and the one solving the SDP">SDP</a>.  <a href="namespacemain.html#a40290f7a01a5282c62165e52049cb3f7">More...</a><br /></td></tr>
+<tr class="separator:a40290f7a01a5282c62165e52049cb3f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -89,17 +89,41 @@ Variables</h2></td></tr>
 <tr class="memdesc:abf32b47b98ca1d3527b88a6c3cf4f2cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Code dimension.  <a href="namespacemain.html#abf32b47b98ca1d3527b88a6c3cf4f2cc">More...</a><br /></td></tr>
 <tr class="separator:abf32b47b98ca1d3527b88a6c3cf4f2cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56183b61e42f3199f35048092c1e2668"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a56183b61e42f3199f35048092c1e2668">l</a> = 34</td></tr>
-<tr class="memdesc:a56183b61e42f3199f35048092c1e2668"><td class="mdescLeft">&#160;</td><td class="mdescRight">sub-target size  <a href="namespacemain.html#a56183b61e42f3199f35048092c1e2668">More...</a><br /></td></tr>
+<tr class="memdesc:a56183b61e42f3199f35048092c1e2668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sub-target size.  <a href="namespacemain.html#a56183b61e42f3199f35048092c1e2668">More...</a><br /></td></tr>
 <tr class="separator:a56183b61e42f3199f35048092c1e2668"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dce41d2529763f270f8680cd627e25a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a1dce41d2529763f270f8680cd627e25a">W</a> = 0.948366</td></tr>
-<tr class="memdesc:a1dce41d2529763f270f8680cd627e25a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target weight size.  <a href="namespacemain.html#a1dce41d2529763f270f8680cd627e25a">More...</a><br /></td></tr>
-<tr class="separator:a1dce41d2529763f270f8680cd627e25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5edd0eaeeddc018050504eb108c6eed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad5edd0eaeeddc018050504eb108c6eed">w</a> = int(0.948366*<a class="el" href="namespacemain.html#ad1293b340a9cdf1c72fff26349ffd01b">n</a>)</td></tr>
+<tr class="memdesc:ad5edd0eaeeddc018050504eb108c6eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target weight size.  <a href="namespacemain.html#ad5edd0eaeeddc018050504eb108c6eed">More...</a><br /></td></tr>
+<tr class="separator:ad5edd0eaeeddc018050504eb108c6eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a356d2e0fd7d9a316172694512d5defc6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a356d2e0fd7d9a316172694512d5defc6">time_sort</a> = 0</td></tr>
+<tr class="separator:a356d2e0fd7d9a316172694512d5defc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30018f88fd61dde8d492c1097691551e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a30018f88fd61dde8d492c1097691551e">time_merge</a> = 0</td></tr>
+<tr class="separator:a30018f88fd61dde8d492c1097691551e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b938690493687ae705df202d238c12"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ac4b938690493687ae705df202d238c12">time_append_element</a> = 0</td></tr>
+<tr class="separator:ac4b938690493687ae705df202d238c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a08b21a83aa4c914422edd2d10ce1e4"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a4a08b21a83aa4c914422edd2d10ce1e4">time_create_elements_sub_op</a> = [0,0,0,0]</td></tr>
+<tr class="separator:a4a08b21a83aa4c914422edd2d10ce1e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad10e4cfd5e2d3df53d13d6b70b809186"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad10e4cfd5e2d3df53d13d6b70b809186">time_create_elements</a> = 0</td></tr>
+<tr class="separator:ad10e4cfd5e2d3df53d13d6b70b809186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4c87353cdb35711bc8a30400383e6d5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ae4c87353cdb35711bc8a30400383e6d5">time_test_op1</a> = 0</td></tr>
+<tr class="separator:ae4c87353cdb35711bc8a30400383e6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a323b090e3d3b5054fb267caecc8cc9fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a323b090e3d3b5054fb267caecc8cc9fb">time_test_op2</a> = 0</td></tr>
+<tr class="separator:a323b090e3d3b5054fb267caecc8cc9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24c5f3344187428af1a8a09afca37b8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a24c5f3344187428af1a8a09afca37b8d">time_list_build</a> = 0</td></tr>
+<tr class="separator:a24c5f3344187428af1a8a09afca37b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53e002fa1cb2732aa7795bceba9bea5e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a53e002fa1cb2732aa7795bceba9bea5e">avg_iter</a> = 0</td></tr>
+<tr class="separator:a53e002fa1cb2732aa7795bceba9bea5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173c6bac3681175d49874caa0efee1f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a173c6bac3681175d49874caa0efee1f8">nb_test</a> = 1</td></tr>
+<tr class="separator:a173c6bac3681175d49874caa0efee1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3c0ddc3475314d05335510c634382c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ab3c0ddc3475314d05335510c634382c0">nb_iter</a></td></tr>
+<tr class="separator:ab3c0ddc3475314d05335510c634382c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cdeed5c5ce0bb8d48376fb9223e3b18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a5cdeed5c5ce0bb8d48376fb9223e3b18">verbose</a></td></tr>
+<tr class="separator:a5cdeed5c5ce0bb8d48376fb9223e3b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Quick starter to use 3,4-dissection. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="af613cea4cba4fb7de8e40896b3368945"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af613cea4cba4fb7de8e40896b3368945">&#9670;&nbsp;</a></span>main()</h2>
+<a id="a40290f7a01a5282c62165e52049cb3f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40290f7a01a5282c62165e52049cb3f7">&#9670;&nbsp;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -107,17 +131,32 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">def main.main </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>True</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Main function which shall be used to test POC of ternary syndrome decoding using a 3,4-dissection It samples uniformly a partity check matrix and syndrome and looks for solution to SDP. </p>
+<p>Main function which shall be used to test POC of ternary syndrome decoding using a 3,4-dissection It samples uniformly a parity check matrix and syndrome and looks for solution to the <a class="el" href="namespaceSDP.html" title="contains the function doing the PGE and the one solving the SDP">SDP</a>. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a53e002fa1cb2732aa7795bceba9bea5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53e002fa1cb2732aa7795bceba9bea5e">&#9670;&nbsp;</a></span>avg_iter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.avg_iter = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a45bd397dfd691c52c27f052bbc51819b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45bd397dfd691c52c27f052bbc51819b">&#9670;&nbsp;</a></span>F3</h2>
 
@@ -160,7 +199,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>sub-target size </p>
+<p>Sub-target size. </p>
 
 </div>
 </div>
@@ -180,14 +219,168 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1dce41d2529763f270f8680cd627e25a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1dce41d2529763f270f8680cd627e25a">&#9670;&nbsp;</a></span>W</h2>
+<a id="ab3c0ddc3475314d05335510c634382c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3c0ddc3475314d05335510c634382c0">&#9670;&nbsp;</a></span>nb_iter</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float main.W = 0.948366</td>
+          <td class="memname">main.nb_iter</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a173c6bac3681175d49874caa0efee1f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a173c6bac3681175d49874caa0efee1f8">&#9670;&nbsp;</a></span>nb_test</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.nb_test = 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac4b938690493687ae705df202d238c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4b938690493687ae705df202d238c12">&#9670;&nbsp;</a></span>time_append_element</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_append_element = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad10e4cfd5e2d3df53d13d6b70b809186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad10e4cfd5e2d3df53d13d6b70b809186">&#9670;&nbsp;</a></span>time_create_elements</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_create_elements = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4a08b21a83aa4c914422edd2d10ce1e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a08b21a83aa4c914422edd2d10ce1e4">&#9670;&nbsp;</a></span>time_create_elements_sub_op</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list main.time_create_elements_sub_op = [0,0,0,0]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a24c5f3344187428af1a8a09afca37b8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c5f3344187428af1a8a09afca37b8d">&#9670;&nbsp;</a></span>time_list_build</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_list_build = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a30018f88fd61dde8d492c1097691551e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30018f88fd61dde8d492c1097691551e">&#9670;&nbsp;</a></span>time_merge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_merge = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a356d2e0fd7d9a316172694512d5defc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a356d2e0fd7d9a316172694512d5defc6">&#9670;&nbsp;</a></span>time_sort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_sort = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae4c87353cdb35711bc8a30400383e6d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4c87353cdb35711bc8a30400383e6d5">&#9670;&nbsp;</a></span>time_test_op1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_test_op1 = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a323b090e3d3b5054fb267caecc8cc9fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a323b090e3d3b5054fb267caecc8cc9fb">&#9670;&nbsp;</a></span>time_test_op2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main.time_test_op2 = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5cdeed5c5ce0bb8d48376fb9223e3b18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cdeed5c5ce0bb8d48376fb9223e3b18">&#9670;&nbsp;</a></span>verbose</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">main.verbose</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad5edd0eaeeddc018050504eb108c6eed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5edd0eaeeddc018050504eb108c6eed">&#9670;&nbsp;</a></span>w</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">main.w = int(0.948366*<a class="el" href="namespacemain.html#ad1293b340a9cdf1c72fff26349ffd01b">n</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">

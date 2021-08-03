@@ -1,0 +1,329 @@
+# @package merges implements the 3,4 dissection, the 4-dissection and binary merges
+
+from sage.all import *
+from element_list import element_list
+import time
+## When we want to update the intermediate target in the 4-dissection, we just have to change the field <tt>linear_combin_trunc</tt>
+# We shall see it as a vector in \f$F3^{something]\f$, and here it is implemented as an integer (called "number" here)
+# For example with \f$something = 4\f$, updating the intermediate target can be reduced to just adding the vectors (0,0,0,1); (0,0,1,1); (0,1,1,1) or (1,1,1,1), and <tt>number_of_digits</tt> denotes the number of non-null digits
+def addvectorF3(number, number_of_digits):
+    tmp_nb = number
+    four_pow = 1 
+    for i in range(0, number_of_digits):
+        mod_tmp = tmp_nb&3
+        if mod_tmp == 2:
+            number = number - 2*four_pow
+        else:
+            number = number + four_pow
+        tmp_nb = tmp_nb >> 2
+        four_pow = 4*four_pow
+    return number
+
+## Similar to <tt>addvectorF3</tt>
+def subvectorF3(number, number_of_digits):
+    tmp_nb = number
+    four_pow = 1
+    for i in range(0, number_of_digits):
+        mod_tmp = tmp_nb&3
+        if mod_tmp == 1:
+            number = number - four_pow
+        elif mod_tmp == 0:
+            number = number + 2*four_pow
+        else:
+             number = number - four_pow
+        tmp_nb = tmp_nb >> 2
+        four_pow = four_pow*4
+    return number
+
+
+
+## When a collision between e1 and e2 is found in the window defined by <tt>linear_combin_trunc</tt>, it creates a new element for the merged list
+# @param e1, e2 elements that collide 
+# @param beg_index the value of <tt>linear_combin_trunc</tt> of the new element must be picked in <tt>linear_combin</tt>starting from this index
+# @param new_target_size length of the <tt>linear_combin_trunc</tt> of the new element
+# @param even if False we negate the value of the linear combination
+# @param times a dict which keeps a trace of times spend in each part of the 3,4 dissec
+def merge_new_element(e1, e2, beg_index, new_target_size, even,times):
+    beg = time.time()
+    new_el = element_list()
+    # value of linear combination
+    if even:
+        new_el.linear_combin = e1.linear_combin-e2.linear_combin    
+    else:
+        new_el.linear_combin = -(e1.linear_combin-e2.linear_combin)
+        
+    end = time.time()
+    times["---- New element constructor + update linear_combin"]  = times["---- New element constructor + update linear_combin"] + (end - beg)
+    # We could crop the first beg_index coordinates in new_el.linear_combin, unfortunately it induces a big overhead wrt time cost
+    #new_el.linear_combin = new_el.linear_combin[len_trunc:e1.linear_combin.nrows(),0]
+    beg = time.time()
+    # updates truncated linear combination
+    new_el.linear_combin_trunc = 0
+    four_pow = 1
+    for i in range(0,new_target_size):
+        new_el.linear_combin_trunc = new_el.linear_combin_trunc + int(new_el.linear_combin[beg_index+i,0])*four_pow
+        four_pow = 4*four_pow
+
+    
+    end = time.time()
+    times["---- Update truncated 'vector' "]  = times["---- Update truncated 'vector' "] + (end - beg)
+    beg = time.time()
+    # update the candiate vector value
+    new_el.vector_value = e1.vector_value + e2.vector_value
+    new_el.begin_index = e1.begin_index
+    new_el.end_index = e2.end_index
+    #new_el.vector_value = e1.vector_value.stack( e2.vector_value )
+    end = time.time()
+    times["---- Update candidate vector of SDP "]  = times["---- Update candidate vector of SDP "]+ (end - beg)
+    
+    return new_el
+
+## searches for collisions between L1 and L2 on the window defined by <tt>linear_combin_trunc</tt>
+# @param L1, L2 lists of element_list which must be sorted according to the value of <tt>linear_combin_trunc</tt>
+# @param beg_index the value of <tt>linear_combin_trunc</tt> for merged elements must correspond to <tt>linear_combin_trunc</tt> starting from the index <tt>beg_index</tt>
+# @param new_target length of <tt>linear_combin_trunc</tt> of merged elements
+# @param even if true the linear combinations are negated 
+# @param times a dict which keeps a trace of times spend in each part of the 3,4 dissec
+# @return the merged list sorted according to the value of <tt>linear_combin_trunc</tt>
+def partial_merge(L1, L2, beg_index, new_target_size, even,times):
+    Merged_list = []
+    #index_Li points to the list Li and depending on whether L1[index_L1].linear_combin_trunc > L2[index_L2].linear_combin_trunc, we increment one of the two pointers
+    index_L1 = 0 ; index_L2 = 0
+    if len(L1) == 0 or len(L2) == 0:
+        return Merged_list
+    while(index_L1 != len(L1) or index_L2 != len(L2)):
+        if index_L1 == len(L1)-1:
+            while index_L2 != len(L2):
+                if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
+                    # for debug: separate creation of new element and appending
+                    beg = time.time()
+                    tmp = merge_new_element(L1[index_L1], L2[index_L2], beg_index, new_target_size,even,times)
+                    end = time.time()
+                    times["--Creating new elements (partitionned) "] = times["--Creating new elements (partitionned) "] + (end-beg)
+                    beg = time.time()
+                    Merged_list.append(tmp)
+                    end = time.time()
+                    times["--Appending elements "]  = times["--Appending elements "]  + (end-beg)
+                index_L2 = index_L2+1
+            index_L1 = index_L1+1
+        elif index_L2 == len(L2)-1:
+            while index_L1 != len(L1):
+                if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
+                    beg = time.time()
+                    tmp = merge_new_element(L1[index_L1], L2[index_L2], beg_index, new_target_size,even,times)
+                    end = time.time()
+                    times["--Creating new elements (partitionned) "] = times["--Creating new elements (partitionned) "] + (end-beg)
+                    beg = time.time()
+                    Merged_list.append(tmp)
+                    end = time.time()
+                    times["--Appending elements "]  = times["--Appending elements "]  + (end-beg)
+                index_L1 = index_L1+1
+            index_L2=index_L2+1
+        else:
+            if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc: #partial collision
+                # append a new element
+                beg = time.time()
+                tmp = merge_new_element(L1[index_L1], L2[index_L2], beg_index, new_target_size,even,times)
+                end = time.time()
+                times["--Creating new elements (partitionned) "] = times["--Creating new elements (partitionned) "] + (end-beg)
+                beg = time.time()
+                Merged_list.append(tmp)
+                end = time.time()
+                times["--Appending elements "]  = times["--Appending elements "]  + (end-beg)
+                
+                # check for multiple collisions L1[index_L1] -- L2[index_L2+a]
+                a = 1; 
+                while index_L2 < len(L2)-a and L1[index_L1].linear_combin_trunc == L2[index_L2+a].linear_combin_trunc:
+                    beg = time.time()
+                    tmp = merge_new_element(L1[index_L1], L2[index_L2+a], beg_index, new_target_size,even,times)
+                    end = time.time()
+                    times["--Creating new elements (partitionned) "] = times["--Creating new elements (partitionned) "] + (end-beg)
+                    beg = time.time()
+                    Merged_list.append(tmp)
+                    end = time.time()
+                    times["--Appending elements "]  = times["--Appending elements "]  + (end-beg)
+                    a = a+1
+                index_L1 = index_L1 + 1
+
+            elif L1[index_L1].linear_combin_trunc < L2[index_L2].linear_combin_trunc:
+                index_L1 = index_L1+1
+            else:
+                index_L2 = index_L2 + 1
+
+    beg = time.time()
+    Merged_list.sort()
+    end = time.time()
+    times["Sort"] = times["Sort"] + (end-beg)
+    
+    return Merged_list
+
+## checks whether <tt>candidate</tt> completes to a solution of the right hamming weight
+# @param candidate candidate vector
+# @param sp full syndrome 
+# @param H12 sub-matrix
+# @param times a dict which keeps a trace of times spend in each part of the 3,4 dissec
+# @param target_weight such that the completion of candidate must have this hamming weight
+# @returns e the full solution if it has the desired hamming weight, else 0 
+def check_on_the_fly(candidate, sp, H12, target_w,times):
+    beg = time.time()
+    e_top = sp - H12*candidate
+    if len(e_top.support())== target_w:
+        e = vector(e_top.list() + candidate.list())
+        end = time.time()
+        times["---- Check on-the-fly"] = times["---- Check on-the-fly"] + end-beg
+        return e
+    else:
+        end = time.time()
+        times["---- Check on-the-fly"] = times["---- Check on-the-fly"] + end-beg
+        return 0
+
+## searches for collisions between L1 and L2 on the field <tt>linear_combin_trunc</tt>
+# contrarily to function <tt>partial_merge</tt>, it checks that the merged elements have the desired hamming weight on-the-fly
+# so that this function must be called at the last merge in the dissection tree
+# @param L1,L2 lists to merge
+# @param times a dict which keeps a trace of times spend in each part of the 3,4 dissec
+# @param sp, H12, target_w see the funciton <tt>check_on_the_fly</tt>
+def partial_merge_on_the_fly(L1, L2, sp, H12, target_w,times):
+    index_L1 = 0 ; index_L2 = 0
+    if len(L1) == 0 or len(L2) == 0:
+        return 0
+    while(index_L1 != len(L1) or index_L2 != len(L2)):
+        if index_L1 == len(L1)-1:
+            while index_L2 != len(L2):
+                if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
+                    # for debug: separate creation of new element and appending
+                    v = L1[index_L1].vector_value + L2[index_L2].vector_value
+                    candidate = matrix(GF(3), nrows=0,ncols=1)
+                    for vi in v:
+                        candidate=candidate.stack(vi)
+                        #list_vect = list_vect + vi.list()
+                    #candidate =  L1[index_L1].vector_value.stack(L2[index_L2].vector_value)
+                    if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
+                        return check_on_the_fly(candidate, sp, H12, target_w,times)
+                index_L2 = index_L2+1
+            index_L1 = index_L1+1
+        elif index_L2 == len(L2)-1:
+            while index_L1 != len(L1):
+                if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
+                    v = L1[index_L1].vector_value + L2[index_L2].vector_value
+                    candidate = matrix(GF(3), nrows=0,ncols=1)
+                    for vi in v:
+                        candidate=candidate.stack(vi)
+                        #list_vect = list_vect + vi.list()
+                    #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)
+                    if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
+                        return check_on_the_fly(candidate, sp, H12, target_w,times)
+                index_L1 = index_L1+1
+            index_L2=index_L2+1
+        else:
+            if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc: #partial collision
+                # append a new element
+                v = L1[index_L1].vector_value + L2[index_L2].vector_value
+                candidate = matrix(GF(3), nrows=0,ncols=1)
+                for vi in v:
+                    candidate = candidate.stack(vi)
+                    #list_vect = list_vect + vi.list()
+                #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)  
+                if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
+                    return check_on_the_fly(candidate, sp, H12, target_w,times)
+                
+                # check for tuple collisions L1[index_L1] -- L2[index_L2+a]
+                a = 1; 
+                while index_L2 < len(L2)-a and L1[index_L1].linear_combin_trunc == L2[index_L2+a].linear_combin_trunc:
+                    v = L1[index_L1].vector_value + L2[index_L2].vector_value
+                    candidate = matrix(GF(3), nrows=0,ncols=1)
+                    for vi in v:
+                        candidate = candidate.stack(vi)
+                        #list_vect = list_vect + vi.list()
+                    #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)  
+                    if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
+                        return check_on_the_fly(candidate, sp, H12, target_w,times)
+                    a = a+1
+                index_L1 = index_L1 + 1
+
+            elif L1[index_L1].linear_combin_trunc < L2[index_L2].linear_combin_trunc:
+                index_L1 = index_L1+1
+            else:
+                index_L2 = index_L2 + 1
+
+    
+    return 0
+                
+                
+
+##  Performs a 4-dissection
+# @param Li the lists for the 4-dissection
+# @param l the sub-syndrome size
+# @param len_already_merged the number of coordinates which has alreay been merged
+# @param len_target_1, len_target_2 the sizes of the two intermediate targets involved in the dissection. We iterate over all intermediate targets of size <tt>len_target_1</tt>
+# @param len_new_target if <tt>onthefly</tt>=False, it is the size of the first target in the next 4-dissection (so that we can prepare correctly the lists for the next 4-dissection)
+# @param even if False we negate the linear combinations in the merged list
+# @param onthefly must be set to True when it is the last 4-dissection in the tree, else it is set to False
+# @param times a dict which keeps a trace of times spend in each part of the 3,4 dissec
+# @param sp, H12, target_w see the function <tt>check_on_the_fly</tt>
+# @returns either the merged list result of the 4-dissection or if <tt>onthefly</tt> = True, the solutions to the SDP or 0 if none of the candidate have the right hamming weight
+def four_dissection(L1,L2,L3,L4,l, len_already_merged, len_target_1,len_target_2,len_new_target,  even, onthefly,times,sp=0, H12=0, target_w=0):
+    L1234 = [] 
+    # A 4-dissection is exhaustive, so we iterate over all intermediate targets
+    for iterate in range(1,3**len_target_1+1):
+        nb_digits = 1
+        modulo = 3
+        beg = time.time()
+        while(iterate%modulo == 0 and modulo<3**len_target_1):
+            nb_digits = nb_digits+1
+            modulo = modulo*3
+        end = time.time()
+        times["- Update modulo"] = times["- Update modulo"] + end - beg
+
+        for l1 in L1:
+            beg = time.time()
+            # We insert the intermediate target in l1 "l1.linear_combin_trunc". To avoid to re-build an entire list, we keep track of the previous target and substract it to the element
+            # We do not need to update l1.linear_combin  because we do a merging on this precice slice 
+            #l1.linear_combin_trunc = addvectorF3(l1.linear_combin_trunc,intermediate_target -previous_intermediate)
+            l1.linear_combin_trunc = addvectorF3(l1.linear_combin_trunc,nb_digits)
+            end = time.time()
+            times["- Add intermediate target in L1 and L3 "]  = times["- Add intermediate target in L1 and L3 "] +end - beg
+        beg = time.time()
+        L1.sort()
+        end = time.time()
+        times["Sort"] = times["Sort"] + (end-beg)
+       
+        for l3 in L3:
+            beg = time.time()
+            l3.linear_combin_trunc = subvectorF3(l3.linear_combin_trunc,nb_digits)
+            end = time.time()
+            times["- Add intermediate target in L1 and L3 "]  = times["- Add intermediate target in L1 and L3 "] +end - beg
+        beg = time.time()
+        L3.sort()
+        end = time.time()
+        times["Sort"] = times["Sort"] + (end-beg)
+        beg = time.time()
+        L12 = partial_merge(L1, L2, len_already_merged+len_target_1, len_target_2, True,times)
+        L34 = partial_merge(L3, L4, len_already_merged+len_target_1, len_target_2, False,times)
+        end = time.time()
+        times["- Merging not on-the-fly"]  = times["- Merging not on-the-fly"]  + (end - beg)
+
+        if onthefly == False:
+            beg = time.time()
+            L1234 = L1234 + partial_merge(L12, L34, len_already_merged+len_target_1+len_target_2, len_new_target,even,times)
+            end = time.time()
+            times["- Merging not on-the-fly"]  = times["- Merging not on-the-fly"]  + (end - beg)
+
+        else:
+            beg_on_the_fly = time.time()
+            e = partial_merge_on_the_fly(L12, L34, sp, H12, target_w,times)
+            end_on_the_fly = time.time()
+            times["- Merging on-the-fly"] = times["- Merging on-the-fly"] + end_on_the_fly - beg_on_the_fly
+            if e!= 0:
+                return e
+
+
+    beg = time.time()
+    L1234.sort()
+    end = time.time()
+    times["Sort"] = times["Sort"] + (end-beg)
+    if onthefly == True:
+        return 0
+    else:
+        return L1234      
+

@@ -1,2 +1,15 @@
-\_form#0=44x9:$n=560$
-\_form#1=9x6:$n$
+\_form#0=10x9:$e_2$
+\_form#1=26x13:$H_2e_2$
+\_form#2=36x13:$-H_2e_2$
+\_form#3=111x14:$H_{i}e_{i} + H_{i+1}e_{i+1} = 0$
+\_form#4=99x14:$H_{i}e_{i} = -H_{i+1}e_{i+1} $
+\_form#5=15x13:$H_2$
+\_form#6=9x6:$n$
+\_form#7=65x13:$H_s \times e = sp$
+\_form#8=23x9:$F3^n$
+\_form#9=16x13:$F_3^n$
+\_form#10=64x13:$Hp = S H P $
+\_form#11=43x13:$sp = S s $
+\_form#12=138x13:$ Hp e = sp \iff H P e = s$
+\_form#13=51x13:$sp = S \cdot s $
+\_form#14=165x13:$ Hp \cdot e = sp \iff H \cdot P \cdot e = s$

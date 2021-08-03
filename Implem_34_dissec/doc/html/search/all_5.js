@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['main_9',['main',['../namespacemain.html',1,'main'],['../namespacemain.html#af613cea4cba4fb7de8e40896b3368945',1,'main.main()']]]
+  ['f3_10',['F3',['../namespacemain.html#a45bd397dfd691c52c27f052bbc51819b',1,'main']]],
+  ['four_5fdissection_11',['four_dissection',['../namespacemerges.html#ad94b535ca3c063c7fe62241fbb0b3518',1,'merges']]]
 ];

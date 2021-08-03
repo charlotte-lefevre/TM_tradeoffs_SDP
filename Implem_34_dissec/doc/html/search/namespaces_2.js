@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['syndrome_5fdecoding_18',['syndrome_decoding',['../namespacesyndrome__decoding.html',1,'']]]
+  ['main_39',['main',['../namespacemain.html',1,'']]],
+  ['merges_40',['merges',['../namespacemerges.html',1,'']]]
 ];
