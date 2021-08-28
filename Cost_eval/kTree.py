@@ -5,6 +5,7 @@ import math
 import numpy as np
 from utils import skkl, real_skkl
 
+
 ## computes costs of the kTree using Stirling approximation
 # For each l value, the number of floors is optimized to have the lowest possible memory and granularty 
 # @param npoints int the number of points used to compute on the graph (in other words the precision of the graph)
@@ -86,8 +87,8 @@ def real_kTree(n,k, w,npoints=200,lmin = 2, lmax =0):
             while 2**a/a <= math.log(2,3)*(k+l)/l:
                 a = a +1
             a = a - 1
-            coeff_mem = math.log(2**a*2*n,2) # Number of lists times vector size times F3 coeff
-            coeff_times = math.log((2**a-1)*2*n,2) #  number of considered mergings times memory coeff
+            coeff_mem = math.log(2**a*2*(l+(k+l)/2**a),2) # Number of lists times F3 coeff times number of coordinates stored
+            coeff_times = math.log((2**a-1)*(2*l + 2*2*l/a) + (n-k-l)*(k+l)*2,2) #  number of considered mergings times (addition cost + merging cost + on-the-fly check)
             complexities.append(coeff_times+ l/a*math.log(3,2)+max(0,real_skkl(n,w,k,l)*n*math.log(3,2)-l/a*math.log(3,2)) )
             mems.append(l/a*math.log(3,2)+coeff_mem)
             lused.append(l)
@@ -118,8 +119,8 @@ def real_smoothed_kTree(n,k,w,npoints=200,lmin = 2,lmax =0):
             a = a - 1
             S = real_skkl(n,w,k,l)
             Lambda = max( l*math.log(3,2)/(a-2) - (k+l)/((a-2)*2**(a-1)), (k+l)/2**(a)) 
-            coeff_mem = math.log(2**a*2*n,2) # Number of lists times vector size times F3 coeff
-            coeff_times = math.log((2**a-1)*2*n,2) #  number of considered mergings times memory coeff
+            coeff_mem = math.log(2**a*2*(l+(k+l)/2**a),2) # Number of lists times F3 coeff times number of coordinates stored
+            coeff_times = math.log((2**a-1)*(2*l + 2*2*l/a) + (n-k-l)*(k+l)*2,2) #  number of considered mergings times (addition cost + merging cost + on-the-fly check)
             complexities.append( Lambda +max(0,S*n*math.log(3,2)-Lambda) +coeff_times)
             mems.append(max( (k+l)/2**(a), Lambda) +coeff_mem )
             lused.append(l)

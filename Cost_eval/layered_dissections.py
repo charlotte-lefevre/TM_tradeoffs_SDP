@@ -92,8 +92,8 @@ def apply_classic(R,Re,r,c,h, Skkl):
 def real_apply_classic(n,k,l,r,c,h, Skkl):
     m = l/(r + (h-1)*(r-1) - c)
     g = gain(r,1)
-    coeff_mem = math.log(r**h*2*n,2) # Number of lists times vector size times F3 coeff
-    coeff_times = math.log((g+1)*(r**h-1)/(r-1)*2*n,2) # Number of main merges done in the dissection times number of considered dissections times memory coeff
+    coeff_mem = math.log(r**h*2*(l+(k+l)/r**h),2) # Number of lists times F3 coeff times number of coordinates stored
+    coeff_times = math.log((r-1)*(r**h-1)/(r-1)*(2*2*l/(g+1) + 2*l) +  (n-k-l)*(k+l)*2,2) # Number of main merges done in the dissection times number of considered dissections times (merging cost + addition cost)
     return (m*math.log(3,2)+coeff_mem, math.log(3,2)*max(n*Skkl,c*m)+coeff_times)
 
 
@@ -113,8 +113,8 @@ def real_apply_smoothed(n,k,l,r,c,h, Skkl):
     denominator = r + (h-2)*(r-1) - c -1
     Lambda = math.log(3,2)*l/denominator - (k+l)/(denominator*r**(h-1))
     g = gain(r,1)
-    coeff_mem = math.log(r**h*2*n,2) # Number of lists times vector size times F3 coeff
-    coeff_times = math.log((g+1)*(r**h-1)/(r-1)*2*n,2) # Number of main merges done in the dissection times number of considered dissections times memory coeff
+    coeff_mem = math.log(r**h*2*(l+(k+l)/r**h),2) # Number of lists times F3 coeff times number of coordinates stored
+    coeff_times = math.log((r-1)*(r**h-1)/(r-1)*(2*2*l/(g+1) + 2*l) + (n-k-l)*(k+l)*2,2) # Number of main merges done in the dissection times number of considered dissections times (merging cost + addition cost)
     return (Lambda+coeff_mem, max(n*Skkl*math.log(3,2),c*Lambda)+coeff_times)
    
 ## Applies calibrated algorithm 
@@ -166,8 +166,8 @@ def real_apply_calibration(n,k,l,r,c,h,S,t, asymptotic=True):
         return (M*math.log(3,2), S*n*math.log(3,2),alpha)
     else:
         g = gain(r,1)
-        coeff_mem = math.log(r**h*2*n,2) # Number of lists times vector size times F3 coeff
-        coeff_times = math.log((g+1)*(r**h-1)/(r-1)*2*n,2) # Number of main merges done in the dissection times number of considered dissections times memory coeff
+        coeff_mem = math.log(r**h*2*(l+(k+l)/r**h),2) # Number of lists times F3 coeff times number of coordinates stored
+        coeff_times = math.log((r-1)*(r**h-1)/(r-1)*(2*2*l/(g+1) + 2*l) + (n-k-l)*(k+l)*2,2) # Number of main merges done in the dissection times number of considered dissections times (merging cost + addition cost)
         return (M*math.log(3,2)+coeff_mem, S*n*math.log(3,2)+coeff_times,alpha)
 
     
@@ -267,8 +267,8 @@ def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
             return -1,-1
 
         g = gain(r,1)
-        coeff_mem = math.log(r**h*2*n,2) # Number of lists times vector size times F3 coeff
-        coeff_times = math.log((g+1)*(r**h-1)/(r-1)*2*n,2) # Number of main merges done in the dissection times number of considered dissections times memory coeff
+        coeff_mem = math.log(r**h*2*(l+(k+l)/r**h),2) # Number of lists times F3 coeff times number of coordinates stored
+        coeff_times = math.log((r-1)*(r**h-1)/(r-1)*(2*2*l/(g+1) + 2*l) + (n-k-l)*(k+l)*2,2) # Number of main merges done in the dissection times number of considered dissections times (merging cost + addition cost)
         return (TrackMem+coeff_mem, Skkl*n*math.log(3,2)+coeff_times)
         # Every computed point is in O(1) for this Re coeff, so we just need to take the smallest memory 
         return(TrackMem, Skkl*math.log(3,2))
