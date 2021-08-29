@@ -69,7 +69,6 @@ def build_lists_division(index_dissec, index_H,sum_ais,array_ai,H22, sub_s, slic
             L4 = build_list_leaves(H22, slices_merges, null_vect,cardinal_list,index_H+coeff_mult*3, index_H+coeff_mult*4, False,times)
             index_H = index_H + 4*coeff_mult
     elif n==875 and k==591 and l==48:
-        #print("debug before " + str(index_H))
         coeff_mult = 10
         coeff_mult_outlier = 9
         cardinal_list = int(3**(l/8))
@@ -99,13 +98,10 @@ def build_lists_division(index_dissec, index_H,sum_ais,array_ai,H22, sub_s, slic
             L4 = build_list_leaves(H22, slices_merges, null_vect,cardinal_list,index_H+coeff_mult*3, index_H+coeff_mult*4, False,times)
             index_H = index_H + 4*coeff_mult
     
-
-
     else:
         print("This instanciation with this n is not implemented ! you should modify the function 'build_lists_division' and the variable 'slices_merge'")
         exit()
 
-    #print("debug after " + str(index_H))
     return L1,L2,L3,L4, index_H,sum_ais
 
 
@@ -129,14 +125,12 @@ def build_list_leaves(H22, slices_merges, s,cardinal, beg_index, end_index, even
     else:
         elmt.linear_combin = -(H_sub*vector_iteration + s)
         
-    #elmt.linear_combin_trunc = elmt.linear_combin[0:s_target].list()
     elmt.linear_combin_trunc = 0
     four_pow = 1
     for i in range(0,s_target):
         elmt.linear_combin_trunc = elmt.linear_combin_trunc + int(elmt.linear_combin[i,0])*four_pow
         four_pow = 4*four_pow
     elmt.vector_value = [copy(vector_iteration)]
-    #elmt.vector_value = copy(vector_iteration)
     elmt.begin_index = beg_index
     elmt.end_index = end_index
     Li.append(elmt)
@@ -163,14 +157,12 @@ def build_list_leaves(H22, slices_merges, s,cardinal, beg_index, end_index, even
             elmt.linear_combin = H_sub*vector_iteration + s
         else:
             elmt.linear_combin = -(H_sub*vector_iteration + s)
-        #elmt.linear_combin_trunc = elmt.linear_combin[0:s_target].list()
         elmt.linear_combin_trunc = 0
         four_pow = 1
         for i in range(0,s_target):
             elmt.linear_combin_trunc = elmt.linear_combin_trunc + int(elmt.linear_combin[i,0])*four_pow
             four_pow = 4*four_pow
         elmt.vector_value = [copy(vector_iteration)]
-        #elmt.vector_value = copy(vector_iteration)
         elmt.begin_index = beg_index
         elmt.end_index = end_index
         Li.append(elmt)

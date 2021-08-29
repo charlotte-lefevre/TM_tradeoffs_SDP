@@ -77,7 +77,6 @@ def SDP(H:matrix,s:matrix,n:int,k:int,l:int,weight:int, verbose=False):
     times = {}
 
     target_weight =  weight-k-l #for the probabilistic step
-    print("target weight " + str(target_weight))
     print("")
 
     # Transform H such that it has desired form
@@ -90,7 +89,6 @@ def SDP(H:matrix,s:matrix,n:int,k:int,l:int,weight:int, verbose=False):
     # The loop stops whenever a solution is found. In such cases it returns the solution of the SDP and the  numbe rof needed iterations
     while(True): #check about rank of instanced
         start = time.time()
-        #print("One iteration !")
         nb_iter = nb_iter + 1
 
 

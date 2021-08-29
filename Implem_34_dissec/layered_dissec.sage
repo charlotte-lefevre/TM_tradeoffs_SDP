@@ -63,11 +63,9 @@ def layered_dissec(n,k,l, H22, H12, sp, target_w,times,verbose = True):
     
     # tells what is the size of intermediate targets 
     # for example slices_merges[0] + slices_merges[1] is the target size of the first 4-dissection
-    # slices_merges[0] is the size of the intermediat etarget within the 4-dissection
+    # slices_merges[0] is the size of the first intermediate target within the 4-dissection
     # slices_merges[1] + slices_merges[2] is the target size of the second  4-dissection and so on 
     # when n is changed this shall be changed 
-    
-    # if n = 560
     if n == 560:
         slices_merges = [4,8,4,8,4,6]
     elif n == 700:
@@ -78,11 +76,6 @@ def layered_dissec(n,k,l, H22, H12, sp, target_w,times,verbose = True):
         print("Error: this n value has not been implemented. You shall modify 'slices_merges' and 'build_lists_division' method, because of rounding problems we do not it automatically. \n I exit.")
         exit()
 
-    # if n = 700 
-    #slices_merges = [5,10,5,10,5,5]
-
-    # if n = 875
-    #slices_merges = [6,12,6,12,6,6]
     
     len_already_merged = 0
 

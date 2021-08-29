@@ -72,7 +72,6 @@ def merge_new_element(e1, e2, beg_index, new_target_size, even,times):
     new_el.vector_value = e1.vector_value + e2.vector_value
     new_el.begin_index = e1.begin_index
     new_el.end_index = e2.end_index
-    #new_el.vector_value = e1.vector_value.stack( e2.vector_value )
     end = time.time()
     times["---- Update candidate vector of SDP "]  = times["---- Update candidate vector of SDP "]+ (end - beg)
     
@@ -95,7 +94,6 @@ def partial_merge(L1, L2, beg_index, new_target_size, even,times):
         if index_L1 == len(L1)-1:
             while index_L2 != len(L2):
                 if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
-                    # for debug: separate creation of new element and appending
                     beg = time.time()
                     tmp = merge_new_element(L1[index_L1], L2[index_L2], beg_index, new_target_size,even,times)
                     end = time.time()
@@ -191,13 +189,10 @@ def partial_merge_on_the_fly(L1, L2, sp, H12, target_w,times):
         if index_L1 == len(L1)-1:
             while index_L2 != len(L2):
                 if L1[index_L1].linear_combin_trunc == L2[index_L2].linear_combin_trunc:
-                    # for debug: separate creation of new element and appending
                     v = L1[index_L1].vector_value + L2[index_L2].vector_value
                     candidate = matrix(GF(3), nrows=0,ncols=1)
                     for vi in v:
                         candidate=candidate.stack(vi)
-                        #list_vect = list_vect + vi.list()
-                    #candidate =  L1[index_L1].vector_value.stack(L2[index_L2].vector_value)
                     if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
                         return check_on_the_fly(candidate, sp, H12, target_w,times)
                 index_L2 = index_L2+1
@@ -209,8 +204,6 @@ def partial_merge_on_the_fly(L1, L2, sp, H12, target_w,times):
                     candidate = matrix(GF(3), nrows=0,ncols=1)
                     for vi in v:
                         candidate=candidate.stack(vi)
-                        #list_vect = list_vect + vi.list()
-                    #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)
                     if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
                         return check_on_the_fly(candidate, sp, H12, target_w,times)
                 index_L1 = index_L1+1
@@ -222,8 +215,6 @@ def partial_merge_on_the_fly(L1, L2, sp, H12, target_w,times):
                 candidate = matrix(GF(3), nrows=0,ncols=1)
                 for vi in v:
                     candidate = candidate.stack(vi)
-                    #list_vect = list_vect + vi.list()
-                #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)  
                 if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
                     return check_on_the_fly(candidate, sp, H12, target_w,times)
                 
@@ -234,8 +225,6 @@ def partial_merge_on_the_fly(L1, L2, sp, H12, target_w,times):
                     candidate = matrix(GF(3), nrows=0,ncols=1)
                     for vi in v:
                         candidate = candidate.stack(vi)
-                        #list_vect = list_vect + vi.list()
-                    #candidate =   L1[index_L1].vector_value.stack(L2[index_L2].vector_value)  
                     if check_on_the_fly(candidate, sp, H12, target_w,times) != 0:
                         return check_on_the_fly(candidate, sp, H12, target_w,times)
                     a = a+1
