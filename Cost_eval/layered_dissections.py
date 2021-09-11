@@ -122,7 +122,7 @@ def real_apply_smoothed(n,k,l,r,c,h, Skkl):
 # @param t the target coefficient such that target size is equal to Re*t (so t = 1 is classical calibration)
 # @return (m,t) log2 of memory / complexity
 # @attention no check is done about the validity of the algorithm application : you must call prior to this algorith is_calibrated_OK
-def apply_calibration(R,Re,r,c,h,S,t):
+def apply_better_gran(R,Re,r,c,h,S,t):
     _,gainX  = find_best_magic(1,r)
     _,gainOfgain = find_best_magic(1,gainX+1)
     MaxAlpha = r - 2*gainX - 1 + gainOfgain
@@ -140,14 +140,14 @@ def apply_calibration(R,Re,r,c,h,S,t):
     return (M*math.log(3,2), S*math.log(3,2),alpha)
 
 
-## Instanciated version of apply_calibration
+## Instanciated version of apply_better_gran
 # @param S desired number of solutions. Here it is not necessarily equal to Skkl, as this can be used by memBlowup 
 # @param t the target coefficient such that target size is equal to l*t (so t = 1 is classical calibration)
 # @param Asymptotic if False computes memory / time cost in the binary metrics 
 # (asymptotic = True is useful when this algorithm is called by memBlowup - as the binary metrics conversion is done at the very end)
 # @return (m,t) log2 of memory / complexity
 # @attention no check is done about the validity of the algorithm application : you must call prior to this algorith real_is_calibrated_OK
-def real_apply_calibration(n,k,l,r,c,h,S,t, asymptotic=True):
+def real_apply_better_gran(n,k,l,r,c,h,S,t, asymptotic=True):
     _,gainX  = find_best_magic(1,r)
     _,gainOfgain = find_best_magic(1,gainX+1)
     MaxAlpha = r - 2*gainX - 1 + gainOfgain
@@ -174,7 +174,7 @@ def real_apply_calibration(n,k,l,r,c,h,S,t, asymptotic=True):
 ## Applies the combined algorithm, with a mix of smoothing and solution calibration.
 # @param nbtargets int the bigger, the better precision but the longer time it takes
 # @return (m,t) log2 of memory / complexity or -1,-1 if algorithm is not applicable
-def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
+def apply_combined(R,Re,r,c,h, Skkl, nbtargets=80):
         TrackMem = -1
         # MaxAlphabeta computation
         _,gainX  = find_best_magic(1,r)
@@ -185,7 +185,7 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
         # its maximum value  corresponds to the base algorithm target 
         # We start with biggest possible target because it is the one that gives us the best results
         for t in np.linspace(0, (r-1)/(r + (h-1)*(r-1) - c) , nbtargets)[::-1]:
-            cardWanted, _,alpha = apply_calibration(R,Re,r,c,h-1,Skkl,(1-t))
+            cardWanted, _,alpha = apply_better_gran(R,Re,r,c,h-1,Skkl,(1-t))
             if cardWanted <0: #UNSAT
                 continue 
                 
@@ -222,7 +222,7 @@ def apply_mem_blowup(R,Re,r,c,h, Skkl, nbtargets=80):
 ## Applies the combined algorithm, with a mix of smoothing and solution calibration.
 # @param nbtargets int the bigger, the better precision but the longer time it takes
 # @return (m,t) log2 of memory / complexity or -1,-1 if algorithm is not applicable
-def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
+def real_apply_combined(n,k,l,r,c,h, Skkl, nbtargets):
         TrackMem = -1
 
         # MaxAlphabeta computation
@@ -236,7 +236,7 @@ def real_apply_mem_blowup(n,k,l,r,c,h, Skkl, nbtargets):
         for t in np.linspace(0, (r-1)/(r + (h-1)*(r-1) - c) , nbtargets)[::-1]:
             cardLeaves = math.log(2,3)*(k+l)/r**h
         
-            cardWanted, _,alpha = real_apply_calibration(n,k,l,r,c,h-1,Skkl,1-t)
+            cardWanted, _,alpha = real_apply_better_gran(n,k,l,r,c,h-1,Skkl,1-t)
             if cardWanted <0: #UNSAT
                 continue 
              
@@ -295,7 +295,7 @@ def Apply(r, h, R, W, Remin, Remax, nbRes = 100, nbtarget =80):
             TrackTimes.append(time)
             TrackCols.append("red"); TrackRes.append(Re)
         elif is_calibrated_OK(R,Re,r,c,h, Skkl): # check if no granularity problem
-            (mem,time,_) = apply_calibration(R,Re,r,c,h,Skkl,1)
+            (mem,time,_) = apply_better_gran(R,Re,r,c,h,Skkl,1)
             TrackMem.append(mem)
             TrackTimes.append(time)
             TrackCols.append("blue") ;TrackRes.append(Re)
@@ -305,7 +305,7 @@ def Apply(r, h, R, W, Remin, Remax, nbRes = 100, nbtarget =80):
             TrackTimes.append(time)
             TrackCols.append("pink") ;TrackRes.append(Re)
         else: # try memblowup
-            (mem,time) = apply_mem_blowup(R,Re,r,c,h, Skkl,nbtarget)
+            (mem,time) = apply_combined(R,Re,r,c,h, Skkl,nbtarget)
             if mem != -1:
                 TrackMem.append(mem)
                 TrackTimes.append(time)
@@ -336,7 +336,7 @@ def real_Apply(n, k, w, r, h, lmin, lmax, nbls = 100, nbtarget =80):
             TrackTimes.append(time)
             TrackCols.append("red"); Trackls.append(l)
         elif real_is_calibrated_OK(n,k,l,r,c,h, Skkl): 
-            (mem,time,_) = real_apply_calibration(n,k,l,r,c,h, Skkl,1, asymptotic=False)
+            (mem,time,_) = real_apply_better_gran(n,k,l,r,c,h, Skkl,1, asymptotic=False)
             TrackMem.append(mem)
             TrackTimes.append(time)
             TrackCols.append("blue") ;Trackls.append(l)
@@ -346,7 +346,7 @@ def real_Apply(n, k, w, r, h, lmin, lmax, nbls = 100, nbtarget =80):
             TrackTimes.append(time)
             TrackCols.append("pink") ;Trackls.append(l)
         else:
-            (mem,time) = real_apply_mem_blowup(n,k,l,r,c,h, Skkl,nbtarget)
+            (mem,time) = real_apply_combined(n,k,l,r,c,h, Skkl,nbtarget)
             if mem != -1:
                 TrackMem.append(mem)
                 TrackTimes.append(time)
